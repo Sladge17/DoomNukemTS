@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/21 19:12:11 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/21 19:45:12 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,19 @@
 # define WIDTH 800
 # define HEIGHT 600
 
+# define PIXEL ((int *)sdl->surface->pixels)
+
 typedef struct	s_sdl
 {
 	SDL_Window	*window;
 	SDL_Surface	*surface;
-	int			*pixel;
 	SDL_Event	event;
 }				t_sdl;
 
 /*
 ** main.c
 */
-t_sdl	*init_sdl();
-void	check_event(SDL_Event event);
+t_sdl			*init_sdl();
+void			check_event(SDL_Event event);
 
 #endif

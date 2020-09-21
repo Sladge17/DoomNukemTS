@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/21 19:16:12 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/21 19:46:48 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@ int		main()
 	t_sdl	*sdl;
 
 	sdl = init_sdl();
+	
 	int		i = -1;
 	while (++i < WIDTH * HEIGHT)
-	{
-		sdl->pixel[i] = 0xFF00;
-	}
+		PIXEL[i] = 0xFF00;
 
 	while (1)
 	{
@@ -41,7 +40,6 @@ t_sdl	*init_sdl()
 	sdl->window = SDL_CreateWindow("doomnukem", SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
 	sdl->surface = SDL_GetWindowSurface(sdl->window);
-	sdl->pixel = (int *)sdl->surface->pixels;
 	return (sdl);
 }
 
