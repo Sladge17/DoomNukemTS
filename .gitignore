@@ -1,0 +1,10 @@
+.git
+.vscode
+gitit.sh
+./obj
+*.o
+*.a
+a.out
+a.out.dSYM
+.DS_Store
+00
