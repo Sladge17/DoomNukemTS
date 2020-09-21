@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/21 19:12:58 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/21 19:16:12 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		main()
 	int		i = -1;
 	while (++i < WIDTH * HEIGHT)
 	{
-		sdl->pixel[i] = 0xFF;
+		sdl->pixel[i] = 0xFF00;
 	}
 
 	while (1)
