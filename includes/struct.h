@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/22 14:12:56 by jthuy            ###   ########.fr       */
+/*   Created: 2020/09/22 14:11:05 by jthuy             #+#    #+#             */
+/*   Updated: 2020/09/22 14:12:29 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#ifndef STRUCT_H
+# define STRUCT_H
 
-# include <stdio.h>
-# include <stdlib.h>
+# include "SDL.h"
+# include "SDL_image.h"
+# include "SDL_mixer.h"
 
-# include "const.h"
-# include "struct.h"
+typedef struct		s_sdl
+{
+	SDL_Window		*window;
+	SDL_Surface		*surface;
+	SDL_Event		event;
+}					t_sdl;
 
-/*
-** main.c
-*/
-t_sdl	*init_sdl();
-void	check_event(SDL_Event event);
-void	draw_win(t_sdl *sdl);
+typedef struct		s_bsp
+{
+	int				data;
+	struct s_bsp	*left;
+	struct s_bsp	*right;
+}					t_bsp;
 
 #endif
