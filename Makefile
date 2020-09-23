@@ -7,7 +7,8 @@ HEADER = -I $(HEADER_DIR)
 
 SRC_DIR = src/
 SRC_LIST =	main.c\
-			init.c
+			init.c\
+			draw_line.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_LIST))
 
 OBJ_DIR = obj/

@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:11:05 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/23 13:40:31 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/23 18:59:56 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ typedef struct	s_map
 
 typedef struct		s_bsp
 {
-	int				data;
-	struct s_bsp	*left;
-	struct s_bsp	*right;
+	int				index;
+	int				crd[2];
+	struct s_bsp	*front;
+	struct s_bsp	*back;
 }					t_bsp;
 
 #endif
