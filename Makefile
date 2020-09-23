@@ -1,6 +1,6 @@
 NAME = DoomNukemTS
-FLAG = -Wall -Wextra -Werror
-# FLAG = -g
+# FLAG = -Wall -Wextra -Werror
+FLAG = -g
 
 HEADER_DIR = includes/
 HEADER = -I $(HEADER_DIR)
@@ -8,6 +8,7 @@ HEADER = -I $(HEADER_DIR)
 SRC_DIR = src/
 SRC_LIST =	main.c\
 			init.c\
+			bsp_tree.c\
 			draw_line.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_LIST))
 
