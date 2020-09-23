@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/22 13:26:02 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/23 13:52:55 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 int		main()
 {
 	t_sdl	*sdl;
+	t_map	*map;
+	t_bsp	*root;
 
 	sdl = init_sdl();
+	map = init_map();
+	root = NULL;
 	
 	int		i = -1;
 	while (++i < WIDTH * HEIGHT)
@@ -29,19 +33,6 @@ int		main()
 		SDL_UpdateWindowSurface(sdl->window);
 	}
 	return (0);
-}
-
-t_sdl	*init_sdl()
-{
-	t_sdl	*sdl;
-	
-	if (SDL_Init(SDL_INIT_VIDEO))
-		exit(0);
-	sdl = (t_sdl *)malloc(sizeof(t_sdl));
-	sdl->window = SDL_CreateWindow("DoomNukemTS", SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
-	sdl->surface = SDL_GetWindowSurface(sdl->window);
-	return (sdl);
 }
 
 void	check_event(SDL_Event event)
