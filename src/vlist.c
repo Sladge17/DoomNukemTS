@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 13:09:02 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/24 15:57:40 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/24 20:21:48 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,19 @@ void	add_vnode(t_vlist **head, int index, t_map *map)
 	if (cursor->next)
 		tmpnode->next = cursor->next;
 	cursor->next = tmpnode;
+}
+
+void	del_vlist(t_vlist **head)
+{
+	t_vlist		*cursor;
+
+	while ((*head)->next)
+	{
+		cursor = *head;
+		while (cursor->next->next)
+			cursor = cursor->next;
+		free(cursor->next);
+		cursor->next = NULL;
+	}
+	free(*head);
 }

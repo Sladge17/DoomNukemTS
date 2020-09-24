@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/24 17:41:59 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/24 20:22:22 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_map	*init_map();
 t_vlist	*set_vlist(t_map *map);
 t_vlist	*create_vnode(int index, t_map *map);
 void	add_vnode(t_vlist **head, int index, t_map *map);
+void	del_vlist(t_vlist **head);
 
 
 /*

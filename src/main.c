@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/24 17:38:50 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/24 20:20:14 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,24 @@ int		main()
 	t_bsp	*root;
 
 	sdl = init_sdl();
+	clear_screen(sdl);
+
+	
 	map = init_map();
 	head = set_vlist(map);
-	root = set_tree(map);
+	// root = set_tree(map);
+	draw_contur(sdl, head);
+
+	map = init_map();
+	del_vlist(&head);
+	head = set_vlist(map);
+	// root = set_tree(map);
+	draw_contur(sdl, head);
 	
-	clear_screen(sdl);
+	map = init_map();
+	del_vlist(&head);
+	head = set_vlist(map);
+	// root = set_tree(map);
 	draw_contur(sdl, head);
 
 	while (1)
