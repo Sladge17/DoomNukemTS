@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/24 15:38:39 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/24 17:41:59 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@
 /*
 ** main.c
 */
-// void	set_tree(t_bsp *root, t_map *map);
-t_bsp	*set_tree(t_map *map);
-t_bsp	*create_node(int index, t_map *map);
-void	add_node(t_bsp *root, int index, t_map *map);
+void	clear_screen(t_sdl *sdl);
+void	draw_contur(t_sdl *sdl, t_vlist *head);
 void	check_event(SDL_Event event);
 void	draw_win(t_sdl *sdl);
 

@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/24 15:43:51 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/24 17:38:50 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,11 @@ int		main()
 
 	sdl = init_sdl();
 	map = init_map();
-
 	head = set_vlist(map);
-	
-	// print vlist data
-	t_vlist	*vcursor;
-	vcursor = head;
-	while (1)
-	{
-		printf("%d\n", vcursor->data);
-		if (vcursor->next)
-		{
-			vcursor = vcursor->next;
-			continue ;
-		}
-		break ;
-	}
-	// exit(0);
-	
-	
-	
 	root = set_tree(map);
 	
-	// Fill backgraund
-	int		i = -1;
-	while (++i < WIDTH * HEIGHT)
-		PIXEL[i] = 0;
-
-
-	
-	// draw_line(sdl, root->crd[0], root->crd[1], root->front->crd[0], root->front->crd[1]);
-	draw_line(sdl, &head->crd[0], &head->next->crd[0]);
-	draw_line(sdl, &head->next->crd[0], &head->next->next->next->crd[0]);
+	clear_screen(sdl);
+	draw_contur(sdl, head);
 
 	while (1)
 	{
@@ -61,6 +34,26 @@ int		main()
 		SDL_UpdateWindowSurface(sdl->window);
 	}
 	return (0);
+}
+
+void	clear_screen(t_sdl *sdl)
+{
+	int		i = -1;
+	while (++i < WIDTH * HEIGHT)
+		PIXEL[i] = 0;
+}
+
+void	draw_contur(t_sdl *sdl, t_vlist *head)
+{
+	t_vlist		*cursor;
+
+	cursor = head;
+	while (cursor->next)
+	{
+		draw_line(sdl, &cursor->crd[0], &cursor->next->crd[0]);
+		cursor = cursor->next;
+	}
+	draw_line(sdl, &cursor->crd[0], &head->crd[0]);
 }
 
 void	check_event(SDL_Event event)
