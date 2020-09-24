@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 13:09:02 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/24 13:09:27 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/24 15:41:16 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_vlist	*set_vlist(t_map *map)
 				i += 1;
 				continue ;
 			}
-			add_vnode(head, i, map);
+			add_vnode(&head, i, map);
 		}
 		i += 1;
 	}
@@ -50,9 +50,24 @@ t_vlist	*create_vnode(int index, t_map *map)
 	return (node);
 }
 
-void	add_vnode(t_vlist *head, int index, t_map *map)
+void	add_vnode(t_vlist **head, int index, t_map *map)
 {
-	while (head->next)
-		head = head->next;
-	head->next = create_vnode(index, map);
+	t_vlist	*tmpnode;
+	t_vlist	*cursor;
+
+	tmpnode = create_vnode(index, map);
+	cursor = *head;
+	if (cursor->data > tmpnode->data)
+	{
+		tmpnode->next = cursor;
+		*head = tmpnode;
+		return ;
+	}
+	
+	while (cursor->next && !(cursor->data < tmpnode->data && cursor->next->data > tmpnode->data))
+		cursor = cursor->next;
+
+	if (cursor->next)
+		tmpnode->next = cursor->next;
+	cursor->next = tmpnode;
 }
