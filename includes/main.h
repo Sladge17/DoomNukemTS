@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/23 20:36:11 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/24 13:10:33 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@ void	draw_win(t_sdl *sdl);
 */
 t_sdl	*init_sdl();
 t_map	*init_map();
+
+/*
+** vlist.c
+*/
+t_vlist	*set_vlist(t_map *map);
+t_vlist	*create_vnode(int index, t_map *map);
+void	add_vnode(t_vlist *head, int index, t_map *map);
+
 
 /*
 ** bsp_tree.c

@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:11:05 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/23 18:59:56 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/24 13:07:35 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ typedef struct	s_map
 	int			width;
 	int			height;
 }				t_map;
+
+typedef struct		s_vlist
+{
+	int				data;
+	int				index;
+	int				crd[2];
+	struct s_vlist	*next;
+}					t_vlist;
 
 typedef struct		s_bsp
 {

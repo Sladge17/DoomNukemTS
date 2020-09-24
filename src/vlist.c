@@ -1,76 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bsp_tree.c                                         :+:      :+:    :+:   */
+/*   vlist.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/23 20:33:12 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/23 20:38:20 by jthuy            ###   ########.fr       */
+/*   Created: 2020/09/24 13:09:02 by jthuy             #+#    #+#             */
+/*   Updated: 2020/09/24 13:09:27 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
- t_bsp	*set_tree(t_map *map)
+t_vlist	*set_vlist(t_map *map)
 {
-	t_bsp	*root;
+	t_vlist	*head;
 	int		i;
 
-	root = NULL;
+	head = NULL;
 	i = 0;
 	while (map->field[i] != '\0')
 	{
 		if (map->field[i] != '.' && map->field[i] != 'P')
 		{
-			if (!root)
+			if (!head)
 			{
-				root = create_node(i, map);
+				head = create_vnode(i, map);
 				i += 1;
 				continue ;
 			}
-			add_node(root, i, map);
+			add_vnode(head, i, map);
 		}
 		i += 1;
 	}
-	return (root);
+	return (head);
 }
 
-t_bsp	*create_node(int index, t_map *map)
+t_vlist	*create_vnode(int index, t_map *map)
 {
-	t_bsp	*node;
+	t_vlist	*node;
 	int		scale = 30; // <-- ONLY for draw mini_map
 
-	node = (t_bsp *)malloc(sizeof(t_bsp));
-	node->index = (int)map->field[index] - 0x30;
+	node = (t_vlist *)malloc(sizeof(t_vlist));
+	node->data = (int)map->field[index] - 0x30;
+	node->index = index;
 	node->crd[X] = index % map->width * scale;
 	node->crd[Y] = index / map->width * scale;
-	node->front = NULL;
-	node->back = NULL;
+	node->next = NULL;
 	return (node);
 }
 
-void	add_node(t_bsp *root, int index, t_map *map)
+void	add_vnode(t_vlist *head, int index, t_map *map)
 {
-	while (1)
-	{
-		if ((int)map->field[index] - 0x30 < root->index)
-		{
-			if (!(root->back))
-			{
-				root->back = create_node(index, map);
-				return ;
-			}
-			root = root->back;
-		}
-		else
-		{
-			if (!(root->front))
-			{
-				root->front = create_node(index, map);
-				return ;
-			}
-			root = root->front;
-		}
-	}
+	while (head->next)
+		head = head->next;
+	head->next = create_vnode(index, map);
 }
