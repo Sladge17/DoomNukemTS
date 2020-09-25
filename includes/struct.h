@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:11:05 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/24 13:07:35 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/25 12:48:47 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ typedef struct		s_sdl
 	SDL_Surface		*surface;
 	SDL_Event		event;
 }					t_sdl;
+
+typedef struct	s_player
+{
+	int			index;
+	int			crd[2];
+}				t_player;
 
 typedef struct	s_map
 {

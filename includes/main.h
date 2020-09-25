@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/24 20:22:22 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/25 13:56:02 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,17 @@
 */
 void	clear_screen(t_sdl *sdl);
 void	draw_contur(t_sdl *sdl, t_vlist *head);
-void	check_event(SDL_Event event);
-void	draw_win(t_sdl *sdl);
+void	draw_player(t_sdl *sdl, t_player *player);
+void	clear_player(t_sdl *sdl, t_player *player);
+void	check_event(SDL_Event event, t_player *player);
+void	draw_win(t_sdl *sdl, t_player *player);
 
 /*
 ** init.c
 */
-t_sdl	*init_sdl();
-t_map	*init_map();
+t_sdl		*init_sdl();
+t_map		*init_map();
+t_player	*init_player(t_map *map);
 
 /*
 ** vlist.c

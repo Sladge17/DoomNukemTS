@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:09:58 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/23 19:01:05 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/25 12:40:47 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,7 @@
 
 # define X 0
 # define Y 1
+
+# define SCALER 30 // <-- MAYBE ONLY for draw mini_map
 
 #endif

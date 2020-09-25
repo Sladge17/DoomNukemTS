@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 13:09:02 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/24 20:21:48 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/25 12:42:21 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,12 @@ t_vlist	*set_vlist(t_map *map)
 t_vlist	*create_vnode(int index, t_map *map)
 {
 	t_vlist	*node;
-	int		scale = 30; // <-- ONLY for draw mini_map
 
 	node = (t_vlist *)malloc(sizeof(t_vlist));
 	node->data = (int)map->field[index] - 0x30;
 	node->index = index;
-	node->crd[X] = index % map->width * scale;
-	node->crd[Y] = index / map->width * scale;
+	node->crd[X] = index % map->width * SCALER; // <-- USE SCALER
+	node->crd[Y] = index / map->width * SCALER; // <-- USE SCALER
 	node->next = NULL;
 	return (node);
 }

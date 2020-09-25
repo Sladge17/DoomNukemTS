@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 13:48:48 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/24 19:49:41 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/25 13:23:29 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,4 +190,19 @@ t_map	*init_map()
 	map->width = 16;
 	map->height = 16;
 	return (map);
+}
+
+t_player	*init_player(t_map *map)
+{
+	t_player	*player;
+	int			i;
+
+	player = (t_player *)malloc(sizeof(t_player));
+	i = 0;
+	while (map->field[i] != 'P')
+		i += 1;
+	player->index = i;
+	player->crd[X] = i % map->width * SCALER; // USE SCALER
+	player->crd[Y] = i / map->width * SCALER; // USE SCALER
+	return (player);
 }
