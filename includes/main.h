@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/25 13:56:02 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/25 09:52:48 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@
 */
 void	clear_screen(t_sdl *sdl);
 void	draw_contur(t_sdl *sdl, t_vlist *head);
+void	fill_backgraund(t_sdl *sdl, int mapwidth);
 void	draw_player(t_sdl *sdl, t_player *player);
 void	clear_player(t_sdl *sdl, t_player *player);
-void	check_event(SDL_Event event, t_player *player);
+char	check_event(SDL_Event event, t_player *player, t_sdl *sdl);
+char	check_collision(t_sdl *sdl, t_player *player, char step_x, char step_y);
 void	draw_win(t_sdl *sdl, t_player *player);
 
 /*
@@ -56,7 +58,6 @@ void	add_node(t_bsp *root, int index, t_map *map);
 /*
 ** draw_line.c
 */
-// void	draw_line(t_sdl *sdl, int crd_x0, int crd_y0, int crd_x1, int crd_y1);
 void	draw_line(t_sdl *sdl, int *vert_0, int *vert_1);
 void	draw_xmore(t_sdl *sdl, int *vert_0, int *vert_1, char *d, int *len);
 void	draw_ymore(t_sdl *sdl, int *vert_0, int *vert_1, char *d, int *len);

@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 18:41:19 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/23 20:06:53 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/25 09:49:20 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	draw_xmore(t_sdl *sdl, int *vert_0, int *vert_1, char *d, int *len)
 	{
 		if ((0 <= cursor[X] && cursor[X] < WIDTH)
 			&& (0 <= cursor[Y] && cursor[Y] < HEIGHT))
-			PIXEL[cursor[X] + WIDTH * cursor[Y]] = 0xFF0000;
+			PIXEL[cursor[X] + WIDTH * cursor[Y]] = SECTCOLOR;
 		overflow += len[1] + 1;
 		if (overflow >= len[0] + 1)
 		{
@@ -64,7 +64,7 @@ void	draw_ymore(t_sdl *sdl, int *vert_0, int *vert_1, char *d, int *len)
 	{
 		if ((0 <= cursor[X] && cursor[X] < WIDTH)
 			&& (0 <= cursor[Y] && cursor[Y] < HEIGHT))
-			PIXEL[cursor[X] + WIDTH * cursor[Y]] = 0xFF0000;
+			PIXEL[cursor[X] + WIDTH * cursor[Y]] = SECTCOLOR;
 		overflow += len[0] + 1;
 		if (overflow >= len[1] + 1)
 		{
