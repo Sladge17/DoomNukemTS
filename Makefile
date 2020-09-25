@@ -10,6 +10,7 @@ SRC_LIST =	main.c\
 			init.c\
 			vlist.c\
 			bsp_tree.c\
+			draw_map.c\
 			draw_line.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_LIST))
 

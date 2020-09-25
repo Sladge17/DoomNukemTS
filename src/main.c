@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/25 09:50:28 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/25 10:07:21 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		main()
 	map = init_map();
 	player = init_player(map);
 	
-	fill_backgraund(sdl, map->width * SCALER);
+	fill_backgraund(sdl, map->width * SCALER); // <--- USED SCALAR
 	head = set_vlist(map);
 	// root = set_tree(map);
 	draw_contur(sdl, head);
@@ -60,73 +60,6 @@ void	clear_screen(t_sdl *sdl)
 	int		i = -1;
 	while (++i < WIDTH * HEIGHT)
 		PIXEL[i] = 0;
-}
-
-void	fill_backgraund(t_sdl *sdl, int mapwidth)
-{
-	int		cursor;
-	char	fillflag = 1;
-
-	cursor = 0;
-	while (cursor < mapwidth * mapwidth)
-	{
-		PIXEL[cursor % mapwidth + WIDTH * (cursor / mapwidth)] = BACKCOLOR;
-		cursor += 1;
-	}
-}
-
-void	draw_contur(t_sdl *sdl, t_vlist *head)
-{
-	t_vlist		*cursor;
-
-	cursor = head;
-	while (cursor->next)
-	{
-		draw_line(sdl, &cursor->crd[0], &cursor->next->crd[0]);
-		cursor = cursor->next;
-	}
-	draw_line(sdl, &cursor->crd[0], &head->crd[0]);
-}
-
-void	draw_player(t_sdl *sdl, t_player *player)
-{
-	int		cursor[2];
-	int		limit[2];
-
-	player->pastcrd[X] = player->crd[X] - 1;
-	player->pastcrd[Y] = player->crd[Y] - 1;
-	
-	cursor[Y] = player->crd[Y] - 1;
-	limit[Y] = 0;
-	while (limit[Y] < 3)
-	{
-		cursor[X] = player->crd[X] - 1;
-		limit[X] = 0;
-		while (limit[X] < 3)
-		{
-			PIXEL[cursor[X] + limit[X] + WIDTH * (cursor[Y] + limit[Y])] = PLAYCOLOR;
-			limit[X] += 1;
-		}
-		limit[Y] += 1;
-	}
-}
-
-void	clear_player(t_sdl *sdl, t_player *player)
-{
-	int		limit[2];
-	
-	limit[Y] = 0;
-	while (limit[Y] < 3)
-	{
-		limit[X] = 0;
-		while (limit[X] < 3)
-		{
-			PIXEL[player->pastcrd[X] + limit[X] + WIDTH * (player->pastcrd[Y] + limit[Y])] = BACKCOLOR;
-			limit[X] += 1;
-		}
-		limit[Y] += 1;
-	}
-	
 }
 
 char	check_event(SDL_Event event, t_player *player, t_sdl *sdl)

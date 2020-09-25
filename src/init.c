@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 13:48:48 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/25 15:26:58 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/25 10:06:52 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ t_player	*init_player(t_map *map)
 	while (map->field[i] != 'P')
 		i += 1;
 	player->index = i;
-	player->crd[X] = i % map->width * SCALER; // USE SCALER
-	player->crd[Y] = i / map->width * SCALER; // USE SCALER
+	player->crd[X] = i % map->width * SCALER; // USED SCALER
+	player->crd[Y] = i / map->width * SCALER; // USED SCALER
 	return (player);
 }
