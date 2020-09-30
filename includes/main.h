@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/30 15:26:46 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/30 19:58:59 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,15 @@ void	draw_normal(t_sdl *sdl, t_bsp *root, t_map *map);
 ** init.c
 */
 t_sdl		*init_sdl();
-t_map		*init_map();
+// t_map		*init_map();
+t_map	*init_map(int n);
 t_player	*init_player(t_map *map);
 
 /*
 ** vlist.c
 */
 t_vlist	*set_vlist(t_map *map);
+t_vlist	*set_vtail(t_map *map);
 t_vlist	*create_vnode(int index, t_map *map);
 t_vlist	*create_vempty();
 void	add_vnode(t_vlist **head, int index, t_map *map);

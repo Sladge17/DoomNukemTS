@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 13:48:48 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/30 16:49:37 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/30 20:01:40 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,9 @@ t_sdl	*init_sdl()
 // 	return (map);
 // }
 
-t_map	*init_map()
+t_map	*init_map(int n)
 {
 	static t_map	*map = NULL;
-	static int		n = 0;
 
 	if (!map)
 		map = (t_map *)malloc(sizeof(t_map));

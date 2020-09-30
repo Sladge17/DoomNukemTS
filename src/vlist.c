@@ -6,13 +6,40 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 13:09:02 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/30 15:26:10 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/30 20:07:26 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
 t_vlist	*set_vlist(t_map *map)
+{
+	t_vlist		*vlist;
+	t_vlist		*tail;
+	t_vlist		*cursor;
+	int			i;
+	
+	i = 0;
+	while (i < 3)
+	{
+		map = init_map(i);
+		tail = set_vtail(map);
+		if (!i)
+			vlist = tail;
+		else
+		{
+			while (cursor->next)
+				cursor = cursor->next;
+			cursor->next = create_vempty();
+			cursor->next->next = tail;
+		}
+		cursor = tail;
+		i += 1;
+	}
+	return (vlist);
+}
+
+t_vlist	*set_vtail(t_map *map)
 {
 	t_vlist	*head;
 	int		i;

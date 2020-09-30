@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/30 17:33:13 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/30 20:03:09 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,42 +18,16 @@ int		main()
 	t_map		*map;
 	t_player	*player;
 	t_vlist		*vlist;
-	t_vlist		*cursor;
-	t_vlist		*head;
 	t_bsp		*root;
 
 	sdl = init_sdl();
 	clear_screen(sdl);
-
-	vlist = NULL;
-	cursor = vlist;
-	int		i = 0;
-	while (i < 3)
-	{
-		map = init_map();
-		if (!i)
-			player = init_player(map);
-		head = set_vlist(map);
-		if (i)
-		{
-			while (cursor->next)
-				cursor = cursor->next;
-			cursor->next = create_vempty();
-			cursor = cursor->next;
-		}
-		if (!i)
-		{
-			cursor = head;
-			vlist = cursor;
-		}
-		else
-		{
-			cursor->next = head;
-		}
-		i += 1;
-		
-	}
+	map = init_map(0);
+	player = init_player(map);
+	vlist = set_vlist(map);
 	
+	
+	t_vlist		*cursor;
 	cursor = vlist;
 	while (cursor)
 	{
@@ -61,8 +35,6 @@ int		main()
 		cursor = cursor->next;
 	}
 	
-	
-	// exit(0);
 	
 	
 	root = set_tree(vlist);
@@ -78,6 +50,7 @@ int		main()
 	
 	fill_backgraund(sdl, map->width * SCALER); // <--- USED SCALAR
 	draw_contur(sdl, vlist, map);
+	// exit(0);
 	// draw_normal(sdl, root, map);
 	
 	draw_player(sdl, player);
