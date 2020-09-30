@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 09:56:11 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/25 09:56:55 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/30 17:23:41 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,33 @@ void	fill_backgraund(t_sdl *sdl, int mapwidth)
 	}
 }
 
-void	draw_contur(t_sdl *sdl, t_vlist *head)
+void	draw_contur(t_sdl *sdl, t_vlist *head, t_map *map)
 {
 	t_vlist		*cursor;
 
 	cursor = head;
-	while (cursor->next)
+	while (1)
 	{
-		draw_line(sdl, &cursor->crd[0], &cursor->next->crd[0]);
-		cursor = cursor->next;
+		while (cursor->next && cursor->next->data)
+		{
+			map->scale_vert[0][X] = cursor->crd[X] * SCALER;
+			map->scale_vert[0][Y] = cursor->crd[Y] * SCALER;
+			map->scale_vert[1][X] = cursor->next->crd[X] * SCALER;
+			map->scale_vert[1][Y] = cursor->next->crd[Y] * SCALER;
+			draw_line(sdl, map->scale_vert[0], map->scale_vert[1]);
+			cursor = cursor->next;
+		}
+		// NEED UNCOMMENT TO CLOSE CONTUR
+		map->scale_vert[0][X] = cursor->crd[X] * SCALER;
+		map->scale_vert[0][Y] = cursor->crd[Y] * SCALER;
+		map->scale_vert[1][X] = head->crd[X] * SCALER;
+		map->scale_vert[1][Y] = head->crd[Y] * SCALER;
+		draw_line(sdl, map->scale_vert[0], map->scale_vert[1]);
+		if (!cursor->next)
+			return ;
+		head = cursor->next->next;
+		cursor = head;
 	}
-	draw_line(sdl, &cursor->crd[0], &head->crd[0]);
 }
 
 void	draw_player(t_sdl *sdl, t_player *player)

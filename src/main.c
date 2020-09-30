@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/25 10:07:21 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/30 17:33:13 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,34 +17,71 @@ int		main()
 	t_sdl		*sdl;
 	t_map		*map;
 	t_player	*player;
+	t_vlist		*vlist;
+	t_vlist		*cursor;
 	t_vlist		*head;
 	t_bsp		*root;
 
 	sdl = init_sdl();
 	clear_screen(sdl);
 
+	vlist = NULL;
+	cursor = vlist;
+	int		i = 0;
+	while (i < 3)
+	{
+		map = init_map();
+		if (!i)
+			player = init_player(map);
+		head = set_vlist(map);
+		if (i)
+		{
+			while (cursor->next)
+				cursor = cursor->next;
+			cursor->next = create_vempty();
+			cursor = cursor->next;
+		}
+		if (!i)
+		{
+			cursor = head;
+			vlist = cursor;
+		}
+		else
+		{
+			cursor->next = head;
+		}
+		i += 1;
+		
+	}
 	
-	map = init_map();
-	player = init_player(map);
+	cursor = vlist;
+	while (cursor)
+	{
+		printf ("%d\n", cursor->data);
+		cursor = cursor->next;
+	}
+	
+	
+	// exit(0);
+	
+	
+	root = set_tree(vlist);
+
+
+	// printf("projection: %d %d\n", root->proj[X], root->proj[Y]);
+	// printf("len: %f\n", root->len);
+	// printf("pivot crd: %f %f\n", root->pivot[X], root->pivot[Y]);
+	// printf("direction deg: %f\n", root->direct * 180 / M_PI);
+	// printf("normal deg: %f\n", root->normal * 180 / M_PI);
+	// exit(10);
+
 	
 	fill_backgraund(sdl, map->width * SCALER); // <--- USED SCALAR
-	head = set_vlist(map);
-	// root = set_tree(map);
-	draw_contur(sdl, head);
-
-	map = init_map();
-	del_vlist(&head);
-	head = set_vlist(map);
-	// root = set_tree(map);
-	draw_contur(sdl, head);
+	draw_contur(sdl, vlist, map);
+	// draw_normal(sdl, root, map);
 	
-	map = init_map();
-	del_vlist(&head);
-	head = set_vlist(map);
-	// root = set_tree(map);
-	draw_contur(sdl, head);
-
 	draw_player(sdl, player);
+
 
 	while (1)
 	{
@@ -53,6 +90,15 @@ int		main()
 		SDL_UpdateWindowSurface(sdl->window);
 	}
 	return (0);
+}
+
+void	draw_normal(t_sdl *sdl, t_bsp *root, t_map *map)
+{
+	map->scale_vert[0][X] = root->pivot[X] * SCALER;
+	map->scale_vert[0][Y] = root->pivot[Y] * SCALER;
+	map->scale_vert[1][X] = (cos(root->normal) + root->pivot[X]) * SCALER;
+	map->scale_vert[1][Y] = (sin(root->normal) + root->pivot[Y]) * SCALER;
+	draw_line(sdl, map->scale_vert[0], map->scale_vert[1]);
 }
 
 void	clear_screen(t_sdl *sdl)

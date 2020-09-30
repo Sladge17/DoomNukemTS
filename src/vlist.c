@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 13:09:02 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/25 10:07:01 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/30 15:26:10 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,21 @@ t_vlist	*create_vnode(int index, t_map *map)
 	node = (t_vlist *)malloc(sizeof(t_vlist));
 	node->data = (int)map->field[index] - 0x30;
 	node->index = index;
-	node->crd[X] = index % map->width * SCALER; // <-- USED SCALER
-	node->crd[Y] = index / map->width * SCALER; // <-- USED SCALER
+	node->crd[X] = index % map->width;
+	node->crd[Y] = index / map->width;
+	node->next = NULL;
+	return (node);
+}
+
+t_vlist	*create_vempty()
+{
+	t_vlist	*node;
+
+	node = (t_vlist *)malloc(sizeof(t_vlist));
+	node->data = 0;
+	node->index = 0;
+	node->crd[X] = 0;
+	node->crd[Y] = 0;
 	node->next = NULL;
 	return (node);
 }

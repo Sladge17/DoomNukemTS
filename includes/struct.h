@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:11:05 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/25 16:42:37 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/09/30 13:43:44 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ typedef struct	s_map
 	char		*field;
 	int			width;
 	int			height;
+	int			scale_vert[2][2];
 }				t_map;
 
 typedef struct		s_vlist
 {
-	int				data;
+	int				data; // <--- MAYBE NOT NEED
 	int				index;
 	int				crd[2];
 	struct s_vlist	*next;
@@ -48,10 +49,23 @@ typedef struct		s_vlist
 
 typedef struct		s_bsp
 {
-	int				index;
-	int				crd[2];
+	int				proj[2];
+	double			len;
+	double			pivot[2]; // <--- MAYBE INT
+	double			direct;
+	double			normal;
+	int				mult[2];
+	int				addition;
+
 	struct s_bsp	*front;
 	struct s_bsp	*back;
 }					t_bsp;
+
+typedef struct		s_slicer
+{
+	int				mult[2];
+	int				addition;
+}					t_slicer;
+
 
 #endif
