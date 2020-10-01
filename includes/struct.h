@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:11:05 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/30 13:43:44 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/01 13:38:36 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct		s_vlist
 
 typedef struct		s_bsp
 {
+	int				index[2];
+	int				crd[2][2];
 	int				proj[2];
 	double			len;
 	double			pivot[2]; // <--- MAYBE INT

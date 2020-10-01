@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/30 20:03:09 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/01 14:40:00 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int		main()
 	map = init_map(0);
 	player = init_player(map);
 	vlist = set_vlist(map);
+	root = set_tree(vlist);
 	
 	
 	t_vlist		*cursor;
@@ -34,27 +35,16 @@ int		main()
 		printf ("%d\n", cursor->data);
 		cursor = cursor->next;
 	}
-	
-	
-	
-	root = set_tree(vlist);
 
-
+	
+	draw_map(sdl, root, map, player);
+	
 	// printf("projection: %d %d\n", root->proj[X], root->proj[Y]);
 	// printf("len: %f\n", root->len);
 	// printf("pivot crd: %f %f\n", root->pivot[X], root->pivot[Y]);
 	// printf("direction deg: %f\n", root->direct * 180 / M_PI);
 	// printf("normal deg: %f\n", root->normal * 180 / M_PI);
 	// exit(10);
-
-	
-	fill_backgraund(sdl, map->width * SCALER); // <--- USED SCALAR
-	draw_contur(sdl, vlist, map);
-	// exit(0);
-	// draw_normal(sdl, root, map);
-	
-	draw_player(sdl, player);
-
 
 	while (1)
 	{
@@ -63,15 +53,6 @@ int		main()
 		SDL_UpdateWindowSurface(sdl->window);
 	}
 	return (0);
-}
-
-void	draw_normal(t_sdl *sdl, t_bsp *root, t_map *map)
-{
-	map->scale_vert[0][X] = root->pivot[X] * SCALER;
-	map->scale_vert[0][Y] = root->pivot[Y] * SCALER;
-	map->scale_vert[1][X] = (cos(root->normal) + root->pivot[X]) * SCALER;
-	map->scale_vert[1][Y] = (sin(root->normal) + root->pivot[Y]) * SCALER;
-	draw_line(sdl, map->scale_vert[0], map->scale_vert[1]);
 }
 
 void	clear_screen(t_sdl *sdl)
