@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 13:09:02 by jthuy             #+#    #+#             */
-/*   Updated: 2020/09/30 20:16:22 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/02 14:01:43 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_vlist	*set_vlist(t_map *map)
 	int			i;
 
 	i = 0; // count of sectors
-	while (i < 3)
+	while (i < 2)
 	{
 		map = init_map(i);
 		tail = set_vtail(map);

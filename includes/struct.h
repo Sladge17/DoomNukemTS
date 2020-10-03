@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:11:05 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/01 13:38:36 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/03 17:49:19 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_player
 {
 	int			index;
 	int			crd[2];
+	double		direction;
 	int			pastcrd[2];
 }				t_player;
 
@@ -56,8 +57,7 @@ typedef struct		s_bsp
 	double			pivot[2]; // <--- MAYBE INT
 	double			direct;
 	double			normal;
-	int				mult[2];
-	int				addition;
+	int				k[3];
 
 	struct s_bsp	*front;
 	struct s_bsp	*back;

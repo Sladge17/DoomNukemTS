@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 20:33:12 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/01 13:40:36 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/03 19:58:09 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,78 @@ t_bsp	*set_tree(t_vlist *head)
 				cursor = cursor->next;
 				continue ;
 			}
-			add_node(cursor, cursor->next, root);
+			// add_node(cursor, cursor->next, root);
+			while (!(add_node(cursor, cursor->next, root))) //MAYBE IF
+				sep_vnode(cursor, cursor->next, root);
 			cursor = cursor->next;
 		}
-		add_node(cursor, head, root);
+		// add_node(cursor, head, root);
+		if (!(add_node(cursor, head, root)))  //MAYBE WHILE
+		{
+			sep_vnode_end(cursor, head, root);
+			add_node(cursor, cursor->next, root);
+			cursor = cursor->next;
+			add_node(cursor, head, root);
+		}
 		if (!cursor->next)
 			return (root);
 		head = cursor->next->next;
 		cursor = head;
 	}
 	return (root);
+}
+
+
+void	sep_vnode(t_vlist *vertex_0, t_vlist *vertex_1, t_bsp *slicer)
+{
+
+	int		k[3];
+
+	k[LA] = vertex_0->crd[Y] - vertex_1->crd[Y];
+	k[LB] = vertex_1->crd[X] - vertex_0->crd[X];
+	k[LC] = vertex_0->crd[X] * vertex_1->crd[Y] - vertex_1->crd[X] * vertex_0->crd[Y];
+
+	int		sep_crd[2];
+
+	sep_crd[X] = (k[LC] * slicer->k[LB] - slicer->k[LC] * k[LB]) /
+				(slicer->k[LA] * k[LB] - k[LA] * slicer->k[LB]);
+	sep_crd[Y] = (k[LA] * slicer->k[LC] - slicer->k[LA] * k[LC]) /
+				(slicer->k[LA] * k[LB] - k[LA] * slicer->k[LB]);
+
+	
+	t_vlist		*insert_vnode;
+	insert_vnode = (t_vlist *)malloc(sizeof(t_vlist));
+	insert_vnode->data = vertex_0->data;
+	insert_vnode->crd[X] = sep_crd[X];
+	insert_vnode->crd[Y] = sep_crd[Y];
+	insert_vnode->next = vertex_1;
+	vertex_0->next = insert_vnode;
+}
+
+void	sep_vnode_end(t_vlist *vertex_0, t_vlist *vertex_1, t_bsp *slicer)
+{
+
+	int		k[3];
+
+	k[LA] = vertex_0->crd[Y] - vertex_1->crd[Y];
+	k[LB] = vertex_1->crd[X] - vertex_0->crd[X];
+	k[LC] = vertex_0->crd[X] * vertex_1->crd[Y] - vertex_1->crd[X] * vertex_0->crd[Y];
+
+	int		sep_crd[2];
+
+	sep_crd[X] = (k[LC] * slicer->k[LB] - slicer->k[LC] * k[LB]) /
+				(slicer->k[LA] * k[LB] - k[LA] * slicer->k[LB]);
+	sep_crd[Y] = (k[LA] * slicer->k[LC] - slicer->k[LA] * k[LC]) /
+				(slicer->k[LA] * k[LB] - k[LA] * slicer->k[LB]);
+
+	
+	t_vlist		*insert_vnode;
+	insert_vnode = (t_vlist *)malloc(sizeof(t_vlist));
+	insert_vnode->data = vertex_0->data;
+	insert_vnode->crd[X] = sep_crd[X];
+	insert_vnode->crd[Y] = sep_crd[Y];
+	insert_vnode->next = NULL;
+	vertex_0->next = insert_vnode;
 }
 
 t_bsp	*create_node(t_vlist *vertex_0, t_vlist *vertex_1)
@@ -62,9 +124,10 @@ t_bsp	*create_node(t_vlist *vertex_0, t_vlist *vertex_1)
 	node->direct = atan2((double)node->proj[Y], (double)node->proj[X]);
 	node->normal = node->direct - M_PI_2;
 	
-	node->mult[X] = vertex_0->crd[Y] - vertex_1->crd[Y];
-	node->mult[Y] = vertex_1->crd[X] - vertex_0->crd[X];
-	node->addition = (vertex_1->crd[X] * vertex_0->crd[Y]) - (vertex_0->crd[X] * vertex_1->crd[Y]);
+	node->k[LA] = vertex_0->crd[Y] - vertex_1->crd[Y];
+	node->k[LB] = vertex_1->crd[X] - vertex_0->crd[X];
+	// node->k[LC] = (vertex_1->crd[X] * vertex_0->crd[Y]) - (vertex_0->crd[X] * vertex_1->crd[Y]);
+	node->k[LC] = vertex_0->crd[X] * vertex_1->crd[Y] - vertex_1->crd[X] * vertex_0->crd[Y];
 
 	node->front = NULL;
 	node->back = NULL;
@@ -72,11 +135,12 @@ t_bsp	*create_node(t_vlist *vertex_0, t_vlist *vertex_1)
 }
 
 
-void	add_node(t_vlist *vertex_0, t_vlist *vertex_1, t_bsp *slicer)
+char	add_node(t_vlist *vertex_0, t_vlist *vertex_1, t_bsp *slicer)
 {
 	t_bsp	*node;
 
-	if (slicer->mult[X] * vertex_1->crd[X] + slicer->mult[Y] * vertex_1->crd[Y] < slicer->addition)
+	if (slicer->k[LA] * vertex_0->crd[X] + slicer->k[LB] * vertex_0->crd[Y] <= -slicer->k[LC] &&
+		slicer->k[LA] * vertex_1->crd[X] + slicer->k[LB] * vertex_1->crd[Y] <= -slicer->k[LC])
 	{
 		if (slicer->front)
 			add_node(vertex_0, vertex_1, slicer->front);
@@ -86,9 +150,10 @@ void	add_node(t_vlist *vertex_0, t_vlist *vertex_1, t_bsp *slicer)
 			slicer->front = node;
 			printf("Add to front\n");
 		}
-		
+		return (1);
 	}
-	else
+	if (slicer->k[LA] * vertex_0->crd[X] + slicer->k[LB] * vertex_0->crd[Y] >= -slicer->k[LC] &&
+		slicer->k[LA] * vertex_1->crd[X] + slicer->k[LB] * vertex_1->crd[Y] >= -slicer->k[LC])
 	{
 		if (slicer->back)
 			add_node(vertex_0, vertex_1, slicer->back);
@@ -98,5 +163,7 @@ void	add_node(t_vlist *vertex_0, t_vlist *vertex_1, t_bsp *slicer)
 			slicer->back = node;
 		printf("Add to back\n");
 		}
+		return (1);
 	}
+	return (0);
 }

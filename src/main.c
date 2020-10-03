@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/01 14:40:00 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/03 18:49:11 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ int		main()
 	while (1)
 	{
 		if (check_event(sdl->event, player, sdl))
+		{
 			draw_win(sdl, player);
+			printf("%f\n", player->direction);
+		}
 		SDL_UpdateWindowSurface(sdl->window);
 	}
 	return (0);
@@ -71,6 +74,21 @@ char	check_event(SDL_Event event, t_player *player, t_sdl *sdl)
 			exit(0);
 		if (event.type == SDL_KEYDOWN)
 		{
+			if (event.key.keysym.sym == SDLK_w)
+			{
+				if (check_collision(sdl, player, 0, -1))
+					return (0);
+				player->crd[Y] -= 1;
+				return (1);
+			}
+			if (event.key.keysym.sym == SDLK_s)
+			{
+				if (check_collision(sdl, player, 0, 1))
+					return (0);
+				player->crd[X] += sin(player->direction);
+				player->crd[Y] += cos(player->direction);
+				return (1);
+			}
 			if (event.key.keysym.sym == SDLK_a)
 			{
 				if (check_collision(sdl, player, -1, 0))
@@ -85,18 +103,20 @@ char	check_event(SDL_Event event, t_player *player, t_sdl *sdl)
 				player->crd[X] += 1;
 				return (1);
 			}
-			if (event.key.keysym.sym == SDLK_w)
+			if (event.key.keysym.sym == SDLK_q)
 			{
-				if (check_collision(sdl, player, 0, -1))
+				if (check_collision(sdl, player, 1, 0))
 					return (0);
-				player->crd[Y] -= 1;
+				player->direction += 10 * (M_PI / 180);
 				return (1);
 			}
-			if (event.key.keysym.sym == SDLK_s)
+			if (event.key.keysym.sym == SDLK_e)
 			{
-				if (check_collision(sdl, player, 0, 1))
+				if (check_collision(sdl, player, 1, 0))
 					return (0);
-				player->crd[Y] += 1;
+				player->direction -= 10 * (M_PI / 180);
+				// if (player->direction < 0)
+				// 	player->direction = 2 * M_PI - player->direction;
 				return (1);
 			}
 		}
