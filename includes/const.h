@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:09:58 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/03 17:05:59 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/05 20:13:36 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@
 # define LB 1
 # define LC 2
 
-# define SCALER 20 // <-- MAYBE ONLY for draw mini_map
+# define SCALER 20.0 // <-- MAYBE ONLY for draw mini_map
 
 #endif

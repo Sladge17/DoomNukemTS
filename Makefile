@@ -9,6 +9,7 @@ SRC_DIR = src/
 SRC_LIST =	main.c\
 			init.c\
 			vlist.c\
+			llist.c\
 			bsp_tree.c\
 			draw_map.c\
 			draw_line.c

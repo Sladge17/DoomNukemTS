@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/03 19:44:40 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/06 19:24:31 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,20 @@ void	add_vnode(t_vlist **head, int index, t_map *map);
 void	del_vlist(t_vlist **head);
 
 /*
+** llist.c
+*/
+t_llist		*set_llist(t_vlist *vlist);
+t_llist		*create_lnode(t_vlist *vertex_0, t_vlist *vertex_1);
+
+/*
 ** bsp_tree.c
 */
-t_bsp	*set_tree(t_vlist *head);
+t_bsp	*set_tree(t_vlist *vlist);
+// t_bsp	*create_bspnode(double *vertex_0, double *vertex_1, t_llist *llist);
+
+
+
+
 void	sep_vnode(t_vlist *vertex_0, t_vlist *vertex_1, t_bsp *slicer);
 void	sep_vnode_end(t_vlist *vertex_0, t_vlist *vertex_1, t_bsp *slicer);
 t_bsp	*create_node(t_vlist *vertex_0, t_vlist *vertex_1);

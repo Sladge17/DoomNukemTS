@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/03 18:49:11 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/06 19:24:37 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,32 +18,50 @@ int		main()
 	t_map		*map;
 	t_player	*player;
 	t_vlist		*vlist;
-	t_bsp		*root;
+	t_llist		*llist;
+	t_bsp		*bsp_tree;
 
 	sdl = init_sdl();
 	clear_screen(sdl);
 	map = init_map(0);
 	player = init_player(map);
 	vlist = set_vlist(map);
-	root = set_tree(vlist);
+	// llist = set_llist(vlist);
+
+	// t_llist		*crs = llist;
+	// while (crs)
+	// {
+	// 	printf("%f\n", crs->normal * 180 / M_PI);
+	// 	crs = crs->next;
+	// }
+	// exit(0);
+
+	// t_vlist		*crs = vlist;
+	// while (crs)
+	// {
+	// 	printf("%d %d\n", crs->crd[X], crs->crd[Y]);
+	// 	crs = crs->next;
+	// }
+	// exit(0);
+	bsp_tree = set_tree(vlist);
 	
 	
-	t_vlist		*cursor;
-	cursor = vlist;
-	while (cursor)
-	{
-		printf ("%d\n", cursor->data);
-		cursor = cursor->next;
-	}
+	// t_vlist		*cursor;
+	// cursor = vlist;
+	// while (cursor)
+	// {
+	// 	printf ("%d\n", cursor->data);
+	// 	cursor = cursor->next;
+	// }
 
 	
-	draw_map(sdl, root, map, player);
+	draw_map(sdl, bsp_tree, map, player);
 	
-	// printf("projection: %d %d\n", root->proj[X], root->proj[Y]);
-	// printf("len: %f\n", root->len);
-	// printf("pivot crd: %f %f\n", root->pivot[X], root->pivot[Y]);
-	// printf("direction deg: %f\n", root->direct * 180 / M_PI);
-	// printf("normal deg: %f\n", root->normal * 180 / M_PI);
+	// printf("projection: %d %d\n", bsp_tree->proj[X], bsp_tree->proj[Y]);
+	// printf("len: %f\n", bsp_tree->len);
+	// printf("pivot crd: %f %f\n", bsp_tree->pivot[X], bsp_tree->pivot[Y]);
+	// printf("direction deg: %f\n", bsp_tree->direct * 180 / M_PI);
+	// printf("normal deg: %f\n", bsp_tree->normal * 180 / M_PI);
 	// exit(10);
 
 	while (1)

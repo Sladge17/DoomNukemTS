@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 09:56:11 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/01 15:09:57 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/05 20:17:58 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,27 @@
 void	draw_map(t_sdl *sdl, t_bsp *root, t_map *map, t_player	*player)
 {
 	fill_backgraund(sdl, map->width * SCALER); // <--- USED SCALAR
+
+	int		line[2][2];
+
+	// line[0][X] = 12 * SCALER;
+	// line[0][Y] = 1 * SCALER;
+	// line[1][X] = 14 * SCALER;
+	// line[1][Y] = 5 * SCALER;
+	// draw_line(sdl, &line[0][0], &line[1][0]);
+	
+	// line[0][X] = 12 * SCALER;
+	// line[0][Y] = 1 * SCALER;
+	// line[1][X] = 13.5 * SCALER;
+	// line[1][Y] = 4 * SCALER;
+	// draw_line(sdl, &line[0][0], &line[1][0]);
+	
+	// line[0][X] = 13.5 * SCALER;
+	// line[0][Y] = 4 * SCALER;
+	// line[1][X] = 14 * SCALER;
+	// line[1][Y] = 5 * SCALER;
+	// draw_line(sdl, &line[0][0], &line[1][0]);
+	
 	draw_sectors(sdl, root, map);
 	draw_player(sdl, player);
 }
@@ -48,6 +69,7 @@ void	draw_wall(t_sdl *sdl, t_bsp *root, t_map *map)
 	map->scale_vert[0][Y] = root->crd[0][Y] * SCALER;
 	map->scale_vert[1][X] = root->crd[1][X] * SCALER;
 	map->scale_vert[1][Y] = root->crd[1][Y] * SCALER;
+	printf("%d %d %d %d\n", map->scale_vert[0][X], map->scale_vert[0][Y], map->scale_vert[1][X], map->scale_vert[1][Y]);
 	draw_line(sdl, map->scale_vert[0], map->scale_vert[1]);
 }
 
