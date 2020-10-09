@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:34:41 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/06 17:23:53 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/08 13:02:36 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ t_llist		*create_lnode(t_vlist *vertex_0, t_vlist *vertex_1)
 	// printf("\n");
 
 	lnode = (t_llist *)malloc(sizeof(lnode));
+
+	lnode->crd[0][X] = vertex_0->crd[X];
+	lnode->crd[0][Y] = vertex_0->crd[Y];
+	lnode->crd[1][X] = vertex_1->crd[X];
+	lnode->crd[1][Y] = vertex_1->crd[Y];
+	
 	lnode->k[LA] = vertex_0->crd[Y] - vertex_1->crd[Y];
 	lnode->k[LB] = vertex_1->crd[X] - vertex_0->crd[X];
 	lnode->k[LC] = vertex_0->crd[X] * vertex_1->crd[Y] - vertex_1->crd[X] * vertex_0->crd[Y];

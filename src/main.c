@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/06 19:24:37 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/08 20:07:02 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,16 @@ int		main()
 	map = init_map(0);
 	player = init_player(map);
 	vlist = set_vlist(map);
-	// llist = set_llist(vlist);
+	llist = set_llist(vlist);
+
+	// NEED SORT LLIST
 
 	// t_llist		*crs = llist;
 	// while (crs)
 	// {
+	// 	printf("%d %d   %d %d\n", crs->crd[0][X], crs->crd[0][Y], crs->crd[1][X], crs->crd[1][Y]);
 	// 	printf("%f\n", crs->normal * 180 / M_PI);
+	// 	printf("\n");
 	// 	crs = crs->next;
 	// }
 	// exit(0);
@@ -43,8 +47,9 @@ int		main()
 	// 	crs = crs->next;
 	// }
 	// exit(0);
-	bsp_tree = set_tree(vlist);
 	
+	// bsp_tree = set_tree(vlist, llist);
+	bsp_tree = set_tree(llist);
 	
 	// t_vlist		*cursor;
 	// cursor = vlist;
@@ -53,8 +58,7 @@ int		main()
 	// 	printf ("%d\n", cursor->data);
 	// 	cursor = cursor->next;
 	// }
-
-	
+	printf("good_tree\n");
 	draw_map(sdl, bsp_tree, map, player);
 	
 	// printf("projection: %d %d\n", bsp_tree->proj[X], bsp_tree->proj[Y]);
@@ -68,8 +72,9 @@ int		main()
 	{
 		if (check_event(sdl->event, player, sdl))
 		{
-			draw_win(sdl, player);
-			printf("%f\n", player->direction);
+			printf("test\n");
+		// 	draw_win(sdl, player);
+		// 	printf("%f\n", player->direction);
 		}
 		SDL_UpdateWindowSurface(sdl->window);
 	}
@@ -85,6 +90,7 @@ void	clear_screen(t_sdl *sdl)
 
 char	check_event(SDL_Event event, t_player *player, t_sdl *sdl)
 {
+	
 	if (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_QUIT ||
@@ -121,24 +127,24 @@ char	check_event(SDL_Event event, t_player *player, t_sdl *sdl)
 				player->crd[X] += 1;
 				return (1);
 			}
-			if (event.key.keysym.sym == SDLK_q)
-			{
-				if (check_collision(sdl, player, 1, 0))
-					return (0);
-				player->direction += 10 * (M_PI / 180);
-				return (1);
-			}
-			if (event.key.keysym.sym == SDLK_e)
-			{
-				if (check_collision(sdl, player, 1, 0))
-					return (0);
-				player->direction -= 10 * (M_PI / 180);
-				// if (player->direction < 0)
-				// 	player->direction = 2 * M_PI - player->direction;
-				return (1);
-			}
+			// if (event.key.keysym.sym == SDLK_q)
+			// {
+			// 	if (check_collision(sdl, player, 1, 0))
+			// 		return (0);
+			// 	player->direction += 10 * (M_PI / 180);
+			// 	return (1);
+			// }
+			// if (event.key.keysym.sym == SDLK_e)
+			// {
+			// 	if (check_collision(sdl, player, 1, 0))
+			// 		return (0);
+			// 	player->direction -= 10 * (M_PI / 180);
+			// 	// if (player->direction < 0)
+			// 	// 	player->direction = 2 * M_PI - player->direction;
+			// 	return (1);
+			// }
 		}
-		return (0);
+		// return (0);
 	}
 	return (0);
 }
