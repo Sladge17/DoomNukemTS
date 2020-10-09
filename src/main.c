@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/08 20:07:02 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/09 16:30:47 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,52 +30,15 @@ int		main()
 
 	// NEED SORT LLIST
 
-	// t_llist		*crs = llist;
-	// while (crs)
-	// {
-	// 	printf("%d %d   %d %d\n", crs->crd[0][X], crs->crd[0][Y], crs->crd[1][X], crs->crd[1][Y]);
-	// 	printf("%f\n", crs->normal * 180 / M_PI);
-	// 	printf("\n");
-	// 	crs = crs->next;
-	// }
-	// exit(0);
-
-	// t_vlist		*crs = vlist;
-	// while (crs)
-	// {
-	// 	printf("%d %d\n", crs->crd[X], crs->crd[Y]);
-	// 	crs = crs->next;
-	// }
-	// exit(0);
-	
-	// bsp_tree = set_tree(vlist, llist);
 	bsp_tree = set_tree(llist);
-	
-	// t_vlist		*cursor;
-	// cursor = vlist;
-	// while (cursor)
-	// {
-	// 	printf ("%d\n", cursor->data);
-	// 	cursor = cursor->next;
-	// }
-	printf("good_tree\n");
+
 	draw_map(sdl, bsp_tree, map, player);
-	
-	// printf("projection: %d %d\n", bsp_tree->proj[X], bsp_tree->proj[Y]);
-	// printf("len: %f\n", bsp_tree->len);
-	// printf("pivot crd: %f %f\n", bsp_tree->pivot[X], bsp_tree->pivot[Y]);
-	// printf("direction deg: %f\n", bsp_tree->direct * 180 / M_PI);
-	// printf("normal deg: %f\n", bsp_tree->normal * 180 / M_PI);
-	// exit(10);
+
 
 	while (1)
 	{
 		if (check_event(sdl->event, player, sdl))
-		{
-			printf("test\n");
-		// 	draw_win(sdl, player);
-		// 	printf("%f\n", player->direction);
-		}
+			draw_win(sdl, player);
 		SDL_UpdateWindowSurface(sdl->window);
 	}
 	return (0);
@@ -90,7 +53,6 @@ void	clear_screen(t_sdl *sdl)
 
 char	check_event(SDL_Event event, t_player *player, t_sdl *sdl)
 {
-	
 	if (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_QUIT ||

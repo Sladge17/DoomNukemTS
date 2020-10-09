@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/08 19:58:37 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/09 16:59:05 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	clear_screen(t_sdl *sdl);
 char	check_event(SDL_Event event, t_player *player, t_sdl *sdl);
 char	check_collision(t_sdl *sdl, t_player *player, char step_x, char step_y);
 void	draw_win(t_sdl *sdl, t_player *player);
-// void	draw_normal(t_sdl *sdl, t_bsp *root);
 void	draw_normal(t_sdl *sdl, t_bsp *root, t_map *map);
 
 /*
@@ -58,22 +57,10 @@ t_llist		*create_lnode(t_vlist *vertex_0, t_vlist *vertex_1);
 ** bsp_tree.c
 */
 
-// t_bsp	*set_tree(t_vlist *vlist, t_llist *llist);
 t_bsp	*set_tree(t_llist *llist);
 t_bsp	*create_bspnode(double *vertex_0, double *vertex_1, t_llist *lcursor);
-// void	add_bspnode(t_bsp *bsp_tree, t_llist *lcursor);
 void	add_bspnode(t_bsp *bsp_tree, t_llist *lcursor, double *vertex_0, double *vertex_1);
-// void	add_bspnode(t_bsp *bsp_tree, t_bsp *bsp_cursor, t_llist *lcursor, double *vertex_0, double *vertex_1);
 double	*sep_lnode(t_bsp *bsp_tree, t_llist *lcursor);
-
-
-
-
-// t_bsp	*set_tree(t_vlist *vlist);
-// void	sep_vnode(t_vlist *vertex_0, t_vlist *vertex_1, t_bsp *slicer);
-// void	sep_vnode_end(t_vlist *vertex_0, t_vlist *vertex_1, t_bsp *slicer);
-// t_bsp	*create_node(t_vlist *vertex_0, t_vlist *vertex_1);
-// char	add_node(t_vlist *vertex_0, t_vlist *vertex_1, t_bsp *slicer);
 
 /*
 ** draw_map.c
@@ -83,7 +70,6 @@ void	fill_backgraund(t_sdl *sdl, int mapwidth);
 void	draw_sectors(t_sdl *sdl, t_bsp *root, t_map *map);
 void	draw_wall(t_sdl *sdl, t_bsp *root, t_map *map);
 void	draw_normal(t_sdl *sdl, t_bsp *root, t_map *map);
-// void	draw_contur(t_sdl *sdl, t_vlist *head, t_map *map);
 void	draw_player(t_sdl *sdl, t_player *player);
 void	clear_player(t_sdl *sdl, t_player *player);
 

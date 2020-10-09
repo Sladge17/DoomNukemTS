@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 13:48:48 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/08 20:07:30 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/09 16:55:08 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ t_sdl	*init_sdl()
 	
 	if (SDL_Init(SDL_INIT_EVERYTHING))
 		exit(0);
-	sdl = (t_sdl *)malloc(sizeof(t_sdl));
+	if (!(sdl = (t_sdl *)malloc(sizeof(t_sdl))))
+		exit(0);
 	sdl->window = SDL_CreateWindow("DoomNukemTS", SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
 	sdl->surface = SDL_GetWindowSurface(sdl->window);
