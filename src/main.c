@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/09 16:30:47 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/09 20:15:18 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int		main()
 	vlist = set_vlist(map);
 	llist = set_llist(vlist);
 
-	// NEED SORT LLIST
+	// NEED SORT LLIST WORK IN PROGRESS
+	// sort_llist(llist);
 
 	bsp_tree = set_tree(llist);
 

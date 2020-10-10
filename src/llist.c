@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:34:41 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/09 16:37:11 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/09 18:49:15 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,64 @@ t_llist		*create_lnode(t_vlist *vertex_0, t_vlist *vertex_1)
 	lnode->next = NULL;
 	
 	return (lnode);
+}
+
+void		sort_llist(t_llist *llist)
+{
+	t_llist		*lcursor;
+	t_llist		*sort_llist;
+	t_llist		*tmp;
+	int			front;
+	int			back;
+	int			score;
+
+	sort_llist = llist;
+	tmp = llist;
+
+	// lcursor = llist->next;
+	// while (lcursor)
+	// {
+	// 	if (llist->k[LA] * lcursor->crd[0][X] + llist->k[LB] * lcursor->crd[0][Y] <= -llist->k[LC] &&
+	// 		llist->k[LA] * lcursor->crd[1][X] + llist->k[LB] * lcursor->crd[1][Y] <= -llist->k[LC])
+	// 		{
+	// 			front += 1;
+	// 			lcursor = lcursor->next;
+	// 			continue ;
+	// 		}
+	// 	if (llist->k[LA] * lcursor->crd[0][X] + llist->k[LB] * lcursor->crd[0][Y] >= -llist->k[LC] &&
+	// 		llist->k[LA] * lcursor->crd[1][X] + llist->k[LB] * lcursor->crd[1][Y] >= -llist->k[LC])
+	// 		{
+	// 			back += 1;
+	// 			lcursor = lcursor->next;
+	// 			continue ;
+	// 		}
+	// 	lcursor = lcursor->next;
+	// }
+
+	while (tmp)
+	{
+		front = 0;
+		back = 0;
+		if (llist->k[LA] * tmp->crd[0][X] + llist->k[LB] * tmp->crd[0][Y] <= -llist->k[LC] &&
+			llist->k[LA] * tmp->crd[1][X] + llist->k[LB] * tmp->crd[1][Y] <= -llist->k[LC])
+			{
+				front += 1;
+				tmp = tmp->next;
+				continue ;
+			}
+		if (llist->k[LA] * tmp->crd[0][X] + llist->k[LB] * tmp->crd[0][Y] >= -llist->k[LC] &&
+			llist->k[LA] * tmp->crd[1][X] + llist->k[LB] * tmp->crd[1][Y] >= -llist->k[LC])
+			{
+				back += 1;
+				tmp = tmp->next;
+				continue ;
+			}
+		tmp = tmp->next;
+		
+	}
+	
+	score = abs(front - back);
+	printf("%d %d\n", front, back);
+	printf("%d\n", score);
+	exit(0);
 }
