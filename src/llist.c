@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:34:41 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/09 18:49:15 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/12 18:44:28 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,62 +67,191 @@ t_llist		*create_lnode(t_vlist *vertex_0, t_vlist *vertex_1)
 	return (lnode);
 }
 
-void		sort_llist(t_llist *llist)
+void		sort_llist(t_llist **llist)  //segmentation fault time to time
 {
-	t_llist		*lcursor;
-	t_llist		*sort_llist;
-	t_llist		*tmp;
+	t_llist		*slicer;
+	t_llist		*temp;
+	t_llist		*cursor;
+	t_llist		*sorted;
+	t_llist		curs_sort;
+	int			len;
+	int			*arr;
 	int			front;
 	int			back;
+	int			score_old;
 	int			score;
+	int			numb;
+	int			i;
+	int			j;
 
-	sort_llist = llist;
-	tmp = llist;
-
-	// lcursor = llist->next;
-	// while (lcursor)
-	// {
-	// 	if (llist->k[LA] * lcursor->crd[0][X] + llist->k[LB] * lcursor->crd[0][Y] <= -llist->k[LC] &&
-	// 		llist->k[LA] * lcursor->crd[1][X] + llist->k[LB] * lcursor->crd[1][Y] <= -llist->k[LC])
-	// 		{
-	// 			front += 1;
-	// 			lcursor = lcursor->next;
-	// 			continue ;
-	// 		}
-	// 	if (llist->k[LA] * lcursor->crd[0][X] + llist->k[LB] * lcursor->crd[0][Y] >= -llist->k[LC] &&
-	// 		llist->k[LA] * lcursor->crd[1][X] + llist->k[LB] * lcursor->crd[1][Y] >= -llist->k[LC])
-	// 		{
-	// 			back += 1;
-	// 			lcursor = lcursor->next;
-	// 			continue ;
-	// 		}
-	// 	lcursor = lcursor->next;
-	// }
-
-	while (tmp)
+	sorted = NULL;
+	
+	cursor = *llist;
+	len = 0;
+	while (cursor)
 	{
+		len += 1;
+		cursor = cursor->next;
+	}
+
+	arr = (int *)malloc(sizeof(len));
+	
+	score_old = 1 << 30;
+	slicer = *llist;
+	j = 0;
+	while (j < len)
+	{
+		temp = slicer->next;
+		slicer->next = NULL;
+		cursor = temp;
+		i = 0;
 		front = 0;
 		back = 0;
-		if (llist->k[LA] * tmp->crd[0][X] + llist->k[LB] * tmp->crd[0][Y] <= -llist->k[LC] &&
-			llist->k[LA] * tmp->crd[1][X] + llist->k[LB] * tmp->crd[1][Y] <= -llist->k[LC])
+		while (i < len - 1)
+		{
+			if (slicer->k[LA] * cursor->crd[0][X] + slicer->k[LB] * cursor->crd[0][Y] <= -slicer->k[LC] &&
+				slicer->k[LA] * cursor->crd[1][X] + slicer->k[LB] * cursor->crd[1][Y] <= -slicer->k[LC])
+				{
+					front += 1;
+					if (!cursor->next)
+						break ;
+					cursor = cursor->next;
+					i += 1;
+					continue ;
+				}
+			if (slicer->k[LA] * cursor->crd[0][X] + slicer->k[LB] * cursor->crd[0][Y] >= -slicer->k[LC] &&
+				slicer->k[LA] * cursor->crd[1][X] + slicer->k[LB] * cursor->crd[1][Y] >= -slicer->k[LC])
+				{
+					back += 1;
+					if (!cursor->next)
+						break ;
+					cursor = cursor->next;
+					i += 1;
+					continue ;
+				}
+			front += 1;
+			back += 1;
+			if (!cursor->next)
+				break ;
+			cursor = cursor->next;
+			i += 1;
+		}
+		// score = abs(front - back);
+		// if (score < score_old)
+		// {
+		// 	numb = j;
+		// 	score_old = score;
+		// }
+		arr[j] = abs(front - back);
+		cursor->next = slicer;
+		slicer = temp;
+		j += 1;
+	}
+
+	// // bubble sort
+	int	tmp;
+	j = len - 1;
+	while (j)
+	{
+		i = 0;
+		cursor = *llist;
+		while (i < j)
+		{
+			if (arr[i] > arr[i + 1])
 			{
-				front += 1;
-				tmp = tmp->next;
-				continue ;
+				tmp = arr[i];
+				arr[i] = arr[i + 1];
+				arr[i + 1] = tmp;
+
+				if (!i)
+				{
+					temp = (*llist)->next;
+					(*llist)->next = (*llist)->next->next;
+					temp->next = *llist;
+					*llist = temp;
+					cursor = *llist;
+				}
+
+				else
+				{
+					temp = cursor->next->next;
+					cursor->next->next = temp->next;
+					temp->next = cursor->next;
+					cursor->next = temp;
+				}
+				
 			}
-		if (llist->k[LA] * tmp->crd[0][X] + llist->k[LB] * tmp->crd[0][Y] >= -llist->k[LC] &&
-			llist->k[LA] * tmp->crd[1][X] + llist->k[LB] * tmp->crd[1][Y] >= -llist->k[LC])
-			{
-				back += 1;
-				tmp = tmp->next;
-				continue ;
-			}
-		tmp = tmp->next;
-		
+			if (i)
+				cursor = cursor->next;
+			i += 1;
+		}
+		j -= 1;
 	}
 	
-	score = abs(front - back);
-	printf("%d %d\n", front, back);
-	printf("%d\n", score);
-	exit(0);
+	// j = 0;
+	// while (j < len)
+	// {
+	// 	printf("%d ", arr[j]);
+	// 	j += 1;
+	// }
+	// printf("\n");
+	
+	// cursor = *llist;
+	// while (cursor)
+	// {
+	// 	printf("%d %d\n", cursor->crd[0][X], cursor->crd[0][Y]);
+	// 	printf("%d %d\n", cursor->crd[1][X], cursor->crd[1][Y]);
+	// 	printf("\n");
+	// 	cursor = cursor->next;
+	// }
+	
+
+	free(arr);
+	// exit(0);
+}
+
+void	add_overallnodes(t_llist *llist, t_map *map)
+{
+	t_llist		*cursor;
+	t_vlist		vertex[2];
+
+	cursor = llist;
+	while (cursor->next)
+		cursor = cursor->next;
+
+	vertex[0].crd[X] = 0;
+	vertex[0].crd[Y] = 0;
+	vertex[1].crd[X] = map->width;
+	vertex[1].crd[Y] = 0;
+	
+	cursor->next = create_lnode(&vertex[0], &vertex[1]);
+	cursor = cursor->next;
+	cursor->normal += M_PI;
+	
+	vertex[0].crd[X] = map->width;
+	vertex[0].crd[Y] = 0;
+	vertex[1].crd[X] = map->width;
+	vertex[1].crd[Y] = map->height;
+	
+	cursor->next = create_lnode(&vertex[0], &vertex[1]);
+	cursor = cursor->next;
+	cursor->normal += M_PI;
+	
+	vertex[0].crd[X] = map->width;
+	vertex[0].crd[Y] = map->height;
+	vertex[1].crd[X] = 0;
+	vertex[1].crd[Y] = map->height;
+	
+	cursor->next = create_lnode(&vertex[0], &vertex[1]);
+	cursor = cursor->next;
+	cursor->normal += M_PI;
+	
+	vertex[0].crd[X] = 0;
+	vertex[0].crd[Y] = map->height;
+	vertex[0].crd[X] = 0;
+	vertex[0].crd[Y] = 0;
+	
+	cursor->next = create_lnode(&vertex[0], &vertex[1]);
+	cursor = cursor->next;
+	cursor->normal += M_PI;
 }

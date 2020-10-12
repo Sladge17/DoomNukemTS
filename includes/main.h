@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/09 18:18:33 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/12 18:39:35 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	del_vlist(t_vlist **head);
 */
 t_llist		*set_llist(t_vlist *vlist);
 t_llist		*create_lnode(t_vlist *vertex_0, t_vlist *vertex_1);
-void		sort_llist(t_llist *llist);
+void		sort_llist(t_llist **llist);
+void	add_overallnodes(t_llist *llist, t_map *map);
 
 /*
 ** bsp_tree.c

@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/09 20:15:18 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/12 18:45:42 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,31 @@ int		main()
 	vlist = set_vlist(map);
 	llist = set_llist(vlist);
 
+	t_llist		*crs = llist;
+	while (crs)
+	{
+		printf("%d %d\n", crs->crd[0][X], crs->crd[0][Y]);
+		printf("%d %d\n", crs->crd[1][X], crs->crd[1][Y]);
+		printf("\n");
+		crs = crs->next;
+	}
+	printf("\n");
+	
 	// NEED SORT LLIST WORK IN PROGRESS
-	// sort_llist(llist);
+	sort_llist(&llist); //segmentation fault time to time
 
+	// crs = llist;
+	// while (crs)
+	// {
+	// 	printf("%d %d\n", crs->crd[0][X], crs->crd[0][Y]);
+	// 	printf("%d %d\n", crs->crd[1][X], crs->crd[1][Y]);
+	// 	printf("\n");
+	// 	crs = crs->next;
+	// }
+	// printf("test\n");
+	
+	add_overallnodes(llist, map);
+	
 	bsp_tree = set_tree(llist);
 
 	draw_map(sdl, bsp_tree, map, player);
