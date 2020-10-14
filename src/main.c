@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/12 18:45:42 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/14 17:52:40 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,7 @@ int		main()
 	vlist = set_vlist(map);
 	llist = set_llist(vlist);
 
-	t_llist		*crs = llist;
-	while (crs)
-	{
-		printf("%d %d\n", crs->crd[0][X], crs->crd[0][Y]);
-		printf("%d %d\n", crs->crd[1][X], crs->crd[1][Y]);
-		printf("\n");
-		crs = crs->next;
-	}
-	printf("\n");
-	
-	// NEED SORT LLIST WORK IN PROGRESS
-	sort_llist(&llist); //segmentation fault time to time
-
+	// t_llist		*crs;
 	// crs = llist;
 	// while (crs)
 	// {
@@ -49,11 +37,27 @@ int		main()
 	// 	printf("\n");
 	// 	crs = crs->next;
 	// }
-	// printf("test\n");
+	// printf("\n");
+	
+	// NEED SORT LLIST WORK IN PROGRESS
+	// llist = sort_llist(llist); //segmentation fault time to time
+
 	
 	add_overallnodes(llist, map);
+	// llist = llist->next->next->next->next->next->next->next;
+	
+	// t_llist	*crs = llist;
+	// while (crs)
+	// {
+	// 	printf("%f %f\n", crs->crd[0][X], crs->crd[0][Y]);
+	// 	printf("%f %f\n", crs->crd[1][X], crs->crd[1][Y]);
+	// 	printf("\n");
+	// 	crs = crs->next;
+	// }
+	// exit(0);
 	
 	bsp_tree = set_tree(llist);
+	// exit(0);
 
 	draw_map(sdl, bsp_tree, map, player);
 

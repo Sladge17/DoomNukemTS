@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:11:05 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/09 16:58:13 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/14 16:44:54 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ typedef struct		s_vlist
 
 typedef struct		s_llist
 {
-	int				crd[2][2];
+	// int				crd[2][2];
+	double			crd[2][2];
 	int				k[3];
 	double			direct;
 	double			normal;

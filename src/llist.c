@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:34:41 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/12 18:44:28 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/14 18:14:23 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,40 @@ t_llist		*create_lnode(t_vlist *vertex_0, t_vlist *vertex_1)
 
 	lnode->direct = atan2(lnode->k[LA], lnode->k[LB]);
 	lnode->normal = lnode->direct + M_PI_2; // MAYBE -
+	if (lnode->normal > 2 * M_PI)
+		lnode->normal -= 2 * M_PI;
 	lnode->next = NULL;
 	
 	return (lnode);
 }
 
-void		sort_llist(t_llist **llist)  //segmentation fault time to time
+
+t_llist		*copy_lnode(t_llist *source)
+{
+	t_llist		*lnode;
+
+	lnode = (t_llist *)malloc(sizeof(t_llist));
+
+	lnode->crd[0][X] = source->crd[0][X];
+	lnode->crd[0][Y] = source->crd[0][Y];
+	lnode->crd[1][X] = source->crd[1][X];
+	lnode->crd[1][Y] = source->crd[1][Y];
+	
+	lnode->k[LA] = source->k[LA];
+	lnode->k[LB] = source->k[LB];
+	lnode->k[LC] = source->k[LC];
+
+	lnode->direct = source->direct;
+	lnode->normal = source->normal;
+	lnode->next = NULL;
+	
+	return (lnode);
+}
+
+
+
+// NEED DEEEEEEEL <------
+t_llist		*sort_llist(t_llist *llist)  //segmentation fault time to time
 {
 	t_llist		*slicer;
 	t_llist		*temp;
@@ -86,7 +114,7 @@ void		sort_llist(t_llist **llist)  //segmentation fault time to time
 
 	sorted = NULL;
 	
-	cursor = *llist;
+	cursor = llist;
 	len = 0;
 	while (cursor)
 	{
@@ -94,10 +122,11 @@ void		sort_llist(t_llist **llist)  //segmentation fault time to time
 		cursor = cursor->next;
 	}
 
-	arr = (int *)malloc(sizeof(len));
+	// arr = (int *)malloc(sizeof(len));
+	arr = (int *)malloc(sizeof(int) * len);
 	
 	score_old = 1 << 30;
-	slicer = *llist;
+	slicer = llist;
 	j = 0;
 	while (j < len)
 	{
@@ -154,7 +183,7 @@ void		sort_llist(t_llist **llist)  //segmentation fault time to time
 	while (j)
 	{
 		i = 0;
-		cursor = *llist;
+		cursor = llist;
 		while (i < j)
 		{
 			if (arr[i] > arr[i + 1])
@@ -165,11 +194,11 @@ void		sort_llist(t_llist **llist)  //segmentation fault time to time
 
 				if (!i)
 				{
-					temp = (*llist)->next;
-					(*llist)->next = (*llist)->next->next;
-					temp->next = *llist;
-					*llist = temp;
-					cursor = *llist;
+					temp = llist->next;
+					llist->next = llist->next->next;
+					temp->next = llist;
+					llist = temp;
+					cursor = llist;
 				}
 
 				else
@@ -196,7 +225,7 @@ void		sort_llist(t_llist **llist)  //segmentation fault time to time
 	// }
 	// printf("\n");
 	
-	// cursor = *llist;
+	// cursor = llist;
 	// while (cursor)
 	// {
 	// 	printf("%d %d\n", cursor->crd[0][X], cursor->crd[0][Y]);
@@ -207,7 +236,7 @@ void		sort_llist(t_llist **llist)  //segmentation fault time to time
 	
 
 	free(arr);
-	// exit(0);
+	return (llist);
 }
 
 void	add_overallnodes(t_llist *llist, t_map *map)
@@ -221,37 +250,57 @@ void	add_overallnodes(t_llist *llist, t_map *map)
 
 	vertex[0].crd[X] = 0;
 	vertex[0].crd[Y] = 0;
-	vertex[1].crd[X] = map->width;
+	vertex[1].crd[X] = map->width - 1;
 	vertex[1].crd[Y] = 0;
 	
 	cursor->next = create_lnode(&vertex[0], &vertex[1]);
 	cursor = cursor->next;
 	cursor->normal += M_PI;
+	if (cursor->normal > 2 * M_PI)
+		cursor->normal -= 2 * M_PI;
+	cursor->k[LA] *= -1;
+	cursor->k[LB] *= -1;
+	cursor->k[LC] *= -1;
 	
-	vertex[0].crd[X] = map->width;
+	vertex[0].crd[X] = map->width - 1;
 	vertex[0].crd[Y] = 0;
-	vertex[1].crd[X] = map->width;
-	vertex[1].crd[Y] = map->height;
+	vertex[1].crd[X] = map->width - 1;
+	vertex[1].crd[Y] = map->height - 1;
 	
 	cursor->next = create_lnode(&vertex[0], &vertex[1]);
 	cursor = cursor->next;
 	cursor->normal += M_PI;
+	if (cursor->normal > 2 * M_PI)
+		cursor->normal -= 2 * M_PI;
+	cursor->k[LA] *= -1;
+	cursor->k[LB] *= -1;
+	cursor->k[LC] *= -1;
 	
-	vertex[0].crd[X] = map->width;
-	vertex[0].crd[Y] = map->height;
+	vertex[0].crd[X] = map->width - 1;
+	vertex[0].crd[Y] = map->height - 1;
 	vertex[1].crd[X] = 0;
-	vertex[1].crd[Y] = map->height;
+	vertex[1].crd[Y] = map->height - 1;
 	
 	cursor->next = create_lnode(&vertex[0], &vertex[1]);
 	cursor = cursor->next;
 	cursor->normal += M_PI;
+	if (cursor->normal > 2 * M_PI)
+		cursor->normal -= 2 * M_PI;
+	cursor->k[LA] *= -1;
+	cursor->k[LB] *= -1;
+	cursor->k[LC] *= -1;
 	
 	vertex[0].crd[X] = 0;
-	vertex[0].crd[Y] = map->height;
-	vertex[0].crd[X] = 0;
-	vertex[0].crd[Y] = 0;
+	vertex[0].crd[Y] = map->height - 1;
+	vertex[1].crd[X] = 0;
+	vertex[1].crd[Y] = 0;
 	
 	cursor->next = create_lnode(&vertex[0], &vertex[1]);
 	cursor = cursor->next;
 	cursor->normal += M_PI;
+	if (cursor->normal > 2 * M_PI)
+		cursor->normal -= 2 * M_PI;
+	cursor->k[LA] *= -1;
+	cursor->k[LB] *= -1;
+	cursor->k[LC] *= -1;
 }

@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 09:56:11 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/09 16:56:42 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/14 18:42:46 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	draw_map(t_sdl *sdl, t_bsp *root, t_map *map, t_player	*player)
 {
-	fill_backgraund(sdl, map->width * SCALER); // <--- USED SCALAR
+	fill_backgraund(sdl, (map->width - 1) * SCALER); // <--- USED SCALAR
 	draw_sectors(sdl, root, map);
 	draw_player(sdl, player);
 }
