@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/14 17:52:40 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/15 13:12:44 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ int		main()
 	// }
 	// printf("\n");
 	
-	// NEED SORT LLIST WORK IN PROGRESS
 	// llist = sort_llist(llist); //segmentation fault time to time
 
 	
-	add_overallnodes(llist, map);
+	// add_overallnodes(llist, map);
 	// llist = llist->next->next->next->next->next->next->next;
 	
 	// t_llist	*crs = llist;

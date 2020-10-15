@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 20:33:12 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/14 17:50:18 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/15 13:13:55 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,23 @@
 t_bsp	*set_tree(t_llist *llist)
 {
 	t_bsp		*bsp_tree;
+	int			llen;
 	t_llist		*slicer;
 
-	slicer = set_slicer(&llist);
+	llen = set_llen(llist);
 
-		printf("%f %f\n", slicer->crd[0][X], slicer->crd[0][Y]);
-		printf("%f %f\n", slicer->crd[1][X], slicer->crd[1][Y]);
-		printf("\n----\n");
+	if (llen == 1)
+	{
+		bsp_tree = create_bspnode(llist);
+		free(llist);
+		return (bsp_tree);
+	}
+	
+	slicer = set_slicer(&llist, llen);
+
+		// printf("%f %f\n", slicer->crd[0][X], slicer->crd[0][Y]);
+		// printf("%f %f\n", slicer->crd[1][X], slicer->crd[1][Y]);
+		// printf("\n----\n");
 
 		// t_llist	*crs = llist;
 		// while (crs)
@@ -152,6 +162,7 @@ t_bsp	*set_tree(t_llist *llist)
 	// }
 
 	bsp_tree = create_bspnode(slicer);
+	free(slicer);
 
 	if (front)
 		bsp_tree->front = set_tree(front);
@@ -172,15 +183,28 @@ t_bsp	*set_tree(t_llist *llist)
 
 	// exit(0);
 	
-
 	return (bsp_tree);
 }
 
-t_llist	*set_slicer(t_llist **llist)
+int		set_llen(t_llist *llist)
+{
+	int		llen;
+
+	llen = 0;
+	while (llist)
+	{
+		llen += 1;
+		llist = llist->next;
+	}
+	return (llen);
+}
+
+
+t_llist	*set_slicer(t_llist **llist, int llen)
 {
 	t_llist	*slicer;
 	t_llist	*cursor;
-	int		len;
+	// int		llen;
 	int		*score;
 	int		j;
 	t_llist	*temp;
@@ -188,19 +212,19 @@ t_llist	*set_slicer(t_llist **llist)
 	int		front;
 	int		back;
 
-	cursor = *llist;
-	len = 0;
-	while (cursor)
-	{
-		len += 1;
-		cursor = cursor->next;
-	}
+	// cursor = *llist;
+	// llen = 0;
+	// while (cursor)
+	// {
+	// 	llen += 1;
+	// 	cursor = cursor->next;
+	// }
 
-	score = (int *)malloc(sizeof(int) * len);
+	score = (int *)malloc(sizeof(int) * llen);
 
 	slicer = *llist;
 	j = 0;
-	while (j < len)
+	while (j < llen)
 	{
 		temp = slicer->next;
 		slicer->next = NULL;
@@ -208,7 +232,7 @@ t_llist	*set_slicer(t_llist **llist)
 		i = 0;
 		front = 0;
 		back = 0;
-		while (i < len - 1)
+		while (i < llen - 1)
 		{
 			if (slicer->k[LA] * cursor->crd[0][X] + slicer->k[LB] * cursor->crd[0][Y] <= -slicer->k[LC] &&
 				slicer->k[LA] * cursor->crd[1][X] + slicer->k[LB] * cursor->crd[1][Y] <= -slicer->k[LC])
@@ -238,15 +262,17 @@ t_llist	*set_slicer(t_llist **llist)
 			i += 1;
 		}
 		score[j] = abs(front - back);
+		
 		if (cursor)
 			cursor->next = slicer;
+			
 		slicer = temp;
 		j += 1;
 	}
 
 	i = 0;
 	j = 1;
-	while (j < len)
+	while (j < llen)
 	{
 		if (score[j] < score[i])
 			i = j;
@@ -285,7 +311,8 @@ t_bsp	*create_bspnode(t_llist *slicer)
 
 	bsp_node->proj[X] = bsp_node->crd[1][X] - bsp_node->crd[0][X];
 	bsp_node->proj[Y] = bsp_node->crd[1][Y] - bsp_node->crd[0][Y];
-	bsp_node->len = sqrt(bsp_node->proj[X] * bsp_node->proj[X] + bsp_node->proj[Y] * bsp_node->proj[Y]);
+	bsp_node->len = sqrt(bsp_node->proj[X] * bsp_node->proj[X] +
+		bsp_node->proj[Y] * bsp_node->proj[Y]);
 	bsp_node->pivot[X] = bsp_node->crd[0][X] + bsp_node->proj[X] / 2;
 	bsp_node->pivot[Y] = bsp_node->crd[0][Y] + bsp_node->proj[Y] / 2;
 
