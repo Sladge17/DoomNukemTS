@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/15 13:12:44 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/15 13:46:33 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,6 @@ int		main()
 	vlist = set_vlist(map);
 	llist = set_llist(vlist);
 
-	// t_llist		*crs;
-	// crs = llist;
-	// while (crs)
-	// {
-	// 	printf("%d %d\n", crs->crd[0][X], crs->crd[0][Y]);
-	// 	printf("%d %d\n", crs->crd[1][X], crs->crd[1][Y]);
-	// 	printf("\n");
-	// 	crs = crs->next;
-	// }
-	// printf("\n");
 	
 	// llist = sort_llist(llist); //segmentation fault time to time
 
@@ -57,6 +47,9 @@ int		main()
 	
 	bsp_tree = set_tree(llist);
 	// exit(0);
+	llist = add_overallnodes(map);
+	// NEED ADD OVERALL LINES INTO EXISTING BSP_TREE
+	
 
 	draw_map(sdl, bsp_tree, map, player);
 

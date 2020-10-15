@@ -1,6 +1,6 @@
 NAME = DoomNukemTS
-# FLAG = -Wall -Wextra -Werror
-FLAG = -g
+FLAG = -Wall -Wextra -Werror -g
+# FLAG = -g
 
 HEADER_DIR = includes/
 HEADER = -I $(HEADER_DIR)

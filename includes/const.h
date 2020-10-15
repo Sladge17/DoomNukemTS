@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:09:58 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/14 18:51:48 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/15 15:56:50 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 
 # define X 0
 # define Y 1
+
+# define FRONT 0
+# define BACK 1
 
 # define LA 0
 # define LB 1
