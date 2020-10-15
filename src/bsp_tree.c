@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 20:33:12 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/15 18:33:33 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/15 18:43:42 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,56 +165,56 @@ t_llist	*set_slicer(t_llist **llist, int llen)
 	int		front;
 	int		back;
 	
+	score = set_score(*llist, llen);
+	// score = (int *)malloc(sizeof(int) * llen);
 
-	score = (int *)malloc(sizeof(int) * llen);
-
-	slicer = *llist;
-	index = 0;
-	while (index < llen)
-	{
-		temp = slicer->next;
-		slicer->next = NULL;
-		cursor = temp;
-		step = 0;
-		front = 0;
-		back = 0;
-		while (step < llen - 1)
-		{
-			if (slicer->k[LA] * cursor->crd[0][X] + slicer->k[LB] * cursor->crd[0][Y] <= -slicer->k[LC] &&
-				slicer->k[LA] * cursor->crd[1][X] + slicer->k[LB] * cursor->crd[1][Y] <= -slicer->k[LC])
-				{
-					front += 1;
-					if (!cursor->next)
-						break ;
-					cursor = cursor->next;
-					step += 1;
-					continue ;
-				}
-			if (slicer->k[LA] * cursor->crd[0][X] + slicer->k[LB] * cursor->crd[0][Y] >= -slicer->k[LC] &&
-				slicer->k[LA] * cursor->crd[1][X] + slicer->k[LB] * cursor->crd[1][Y] >= -slicer->k[LC])
-				{
-					back += 1;
-					if (!cursor->next)
-						break ;
-					cursor = cursor->next;
-					step += 1;
-					continue ;
-				}
-			front += 1;
-			back += 1;
-			if (!cursor->next)
-				break ;
-			cursor = cursor->next;
-			step += 1;
-		}
-		score[index] = abs(front - back);
+	// slicer = *llist;
+	// index = 0;
+	// while (index < llen)
+	// {
+	// 	temp = slicer->next;
+	// 	slicer->next = NULL;
+	// 	cursor = temp;
+	// 	step = 0;
+	// 	front = 0;
+	// 	back = 0;
+	// 	while (step < llen - 1)
+	// 	{
+	// 		if (slicer->k[LA] * cursor->crd[0][X] + slicer->k[LB] * cursor->crd[0][Y] <= -slicer->k[LC] &&
+	// 			slicer->k[LA] * cursor->crd[1][X] + slicer->k[LB] * cursor->crd[1][Y] <= -slicer->k[LC])
+	// 			{
+	// 				front += 1;
+	// 				if (!cursor->next)
+	// 					break ;
+	// 				cursor = cursor->next;
+	// 				step += 1;
+	// 				continue ;
+	// 			}
+	// 		if (slicer->k[LA] * cursor->crd[0][X] + slicer->k[LB] * cursor->crd[0][Y] >= -slicer->k[LC] &&
+	// 			slicer->k[LA] * cursor->crd[1][X] + slicer->k[LB] * cursor->crd[1][Y] >= -slicer->k[LC])
+	// 			{
+	// 				back += 1;
+	// 				if (!cursor->next)
+	// 					break ;
+	// 				cursor = cursor->next;
+	// 				step += 1;
+	// 				continue ;
+	// 			}
+	// 		front += 1;
+	// 		back += 1;
+	// 		if (!cursor->next)
+	// 			break ;
+	// 		cursor = cursor->next;
+	// 		step += 1;
+	// 	}
+	// 	score[index] = abs(front - back);
 		
-		if (cursor)
-			cursor->next = slicer;
+	// 	if (cursor)
+	// 		cursor->next = slicer;
 			
-		slicer = temp;
-		index += 1;
-	}
+	// 	slicer = temp;
+	// 	index += 1;
+	// }
 
 	step = 0;
 	index = 1;
@@ -245,4 +245,63 @@ t_llist	*set_slicer(t_llist **llist, int llen)
 	return (slicer);
 }
 
+int		*set_score(t_llist *llist, int llen)
+{
+	int		*score;
+	int		index;
+	t_llist	*temp;
+	t_llist	*cursor;
+	int		step;
+	int		front;
+	int		back;
+	
+	score = (int *)malloc(sizeof(int) * llen);
 
+	index = 0;
+	while (index < llen)
+	{
+		temp = llist->next;
+		llist->next = NULL;
+		cursor = temp;
+		step = 0;
+		front = 0;
+		back = 0;
+		while (step < llen - 1)
+		{
+			if (llist->k[LA] * cursor->crd[0][X] + llist->k[LB] * cursor->crd[0][Y] <= -llist->k[LC] &&
+				llist->k[LA] * cursor->crd[1][X] + llist->k[LB] * cursor->crd[1][Y] <= -llist->k[LC])
+				{
+					front += 1;
+					if (!cursor->next)
+						break ;
+					cursor = cursor->next;
+					step += 1;
+					continue ;
+				}
+			if (llist->k[LA] * cursor->crd[0][X] + llist->k[LB] * cursor->crd[0][Y] >= -llist->k[LC] &&
+				llist->k[LA] * cursor->crd[1][X] + llist->k[LB] * cursor->crd[1][Y] >= -llist->k[LC])
+				{
+					back += 1;
+					if (!cursor->next)
+						break ;
+					cursor = cursor->next;
+					step += 1;
+					continue ;
+				}
+			front += 1;
+			back += 1;
+			if (!cursor->next)
+				break ;
+			cursor = cursor->next;
+			step += 1;
+		}
+		score[index] = abs(front - back);
+		
+		if (cursor)
+			cursor->next = llist;
+			
+		llist = temp;
+		index += 1;
+	}
+	return (score);
+}

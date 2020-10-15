@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/15 18:06:21 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/15 18:44:15 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,12 @@ void	sep_llist(t_llist *llist, t_llist *slicer, t_llist **part_llist);
 void	fill_partllist(t_llist **llist, t_llist **part_llist, t_llist **cursor, int part);
 
 void	sep_lnode(t_llist *llist, t_llist *slicer);
-t_llist	*set_slicer(t_llist **llist, int llen);
 // void	add_bspnode(t_bsp *bsp_tree, t_llist *lcursor, double *vertex_0, double *vertex_1);
 // double	*sep_lnode(t_bsp *bsp_tree, t_llist *lcursor);
 double	*set_sepvertex(t_llist *llist, t_llist *slicer);
+
+t_llist	*set_slicer(t_llist **llist, int llen);
+int		*set_score(t_llist *llist, int llen);
 
 
 /*
