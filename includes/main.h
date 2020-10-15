@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/15 18:44:15 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/15 20:06:58 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,6 @@ t_llist		*add_overallnodes(t_map *map);
 /*
 ** bsp_tree.c
 */
-
-// t_bsp	*set_tree(t_llist *llist);
-// t_bsp	*create_bspnode(double *vertex_0, double *vertex_1, t_llist *lcursor);
-// void	add_bspnode(t_bsp *bsp_tree, t_llist *lcursor, double *vertex_0, double *vertex_1);
-// double	*sep_lnode(t_bsp *bsp_tree, t_llist *lcursor);
-
 t_bsp	*set_tree(t_llist *llist);
 int		set_llen(t_llist *llist);
 t_bsp	*create_bspnode(t_llist *slicer);
@@ -78,6 +72,7 @@ double	*set_sepvertex(t_llist *llist, t_llist *slicer);
 
 t_llist	*set_slicer(t_llist **llist, int llen);
 int		*set_score(t_llist *llist, int llen);
+int		set_slicerindex(int *score, int llen);
 
 
 /*

@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/15 13:46:33 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/15 20:09:43 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,23 @@ int		main()
 	player = init_player(map);
 	vlist = set_vlist(map);
 	llist = set_llist(vlist);
-
-	
-	// llist = sort_llist(llist); //segmentation fault time to time
-
-	
-	// add_overallnodes(llist, map);
-	// llist = llist->next->next->next->next->next->next->next;
-	
-	// t_llist	*crs = llist;
-	// while (crs)
-	// {
-	// 	printf("%f %f\n", crs->crd[0][X], crs->crd[0][Y]);
-	// 	printf("%f %f\n", crs->crd[1][X], crs->crd[1][Y]);
-	// 	printf("\n");
-	// 	crs = crs->next;
-	// }
-	// exit(0);
 	
 	bsp_tree = set_tree(llist);
-	// exit(0);
+
+	t_llist *crs = llist;
+	while (crs)
+	{
+		printf("%f %f\n", crs->crd[0][X],  crs->crd[0][Y]);
+		printf("%f %f\n", crs->crd[1][X],  crs->crd[1][Y]);
+		crs = crs->next;
+	}
+	exit(0);
+
+	// if (!llist)
+	// {
+	// 	printf("ok\n");
+	// 	exit(0);
+	// }
 	llist = add_overallnodes(map);
 	// NEED ADD OVERALL LINES INTO EXISTING BSP_TREE
 	
