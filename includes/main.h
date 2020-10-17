@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/17 18:22:16 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/17 19:45:12 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	check_event(SDL_Event event, t_player *player, t_sdl *sdl);
 char	check_collision(t_sdl *sdl, t_player *player, char step_x, char step_y);
 void	draw_win(t_sdl *sdl, t_player *player);
 void	draw_normal(t_sdl *sdl, t_bsp *root, t_map *map);
-
+void	fix_llist(t_llist **llist, t_map *map);
 /*
 ** init.c
 */
@@ -58,7 +58,7 @@ t_llist		*fill_overallnodes(t_map *map);
 /*
 ** bsp_tree.c
 */
-t_bsp	*set_tree(t_llist *llist);
+t_bsp	*set_tree(t_llist *llist, t_map *map);
 int		set_llen(t_llist *llist);
 t_bsp	*create_bspnode(t_llist *slicer);
 void	sep_llist(t_llist *llist, t_llist *slicer, t_llist **part_llist);

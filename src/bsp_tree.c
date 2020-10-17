@@ -6,13 +6,13 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 20:33:12 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/17 19:03:41 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/17 20:08:27 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-t_bsp	*set_tree(t_llist *llist)
+t_bsp	*set_tree(t_llist *llist, t_map *map)
 {
 	t_bsp		*bsp_tree;
 	int			llen;
@@ -31,9 +31,17 @@ t_bsp	*set_tree(t_llist *llist)
 	bsp_tree = create_bspnode(slicer);
 	free(slicer);
 	if (part_llist[FRONT])
-		bsp_tree->front = set_tree(part_llist[FRONT]);
+	{
+		if (part_llist[FRONT]->next)
+			fix_llist(&(part_llist[FRONT]), map);
+		bsp_tree->front = set_tree(part_llist[FRONT], map);
+	}
 	if (part_llist[BACK])
-		bsp_tree->back = set_tree(part_llist[BACK]);
+	{
+		if (part_llist[BACK]->next)
+			fix_llist(&(part_llist[BACK]), map);
+		bsp_tree->back = set_tree(part_llist[BACK], map);
+	}
 	return (bsp_tree);
 }
 

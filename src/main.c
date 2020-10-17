@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/17 18:05:19 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/17 20:05:08 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,64 +27,65 @@ int		main()
 	player = init_player(map);
 	vlist = set_vlist(map);
 	llist = set_llist(vlist);
+	fix_llist(&llist, map);
 	
-	t_llist *tmp;
-	t_llist *tmp2;
+	// t_llist *tmp;
+	// t_llist *tmp2;
 	
-	int		step = 0;
-	int		i = 0;
-	tmp = llist;
-	// while ((!tmp->crd[0][Y] && !tmp->crd[1][Y]) || (tmp->crd[0][Y] == map->height - 1 && tmp->crd[1][Y] == map->height - 1) ||
-	// 	(!tmp->crd[0][X] && !tmp->crd[1][X]) || (tmp->crd[0][X] == map->width - 1 && tmp->crd[1][X] == map->width - 1))
-	while ((!tmp->crd[0][Y] && !tmp->crd[1][Y]) || (tmp->crd[0][X] == map->width - 1 && tmp->crd[1][X] == map->width - 1))
-	{
-		tmp = tmp->next;
-		step += 1;
-	}
+	// int		step = 0;
+	// int		i = 0;
+	// tmp = llist;
+	// // while ((!tmp->crd[0][Y] && !tmp->crd[1][Y]) || (tmp->crd[0][Y] == map->height - 1 && tmp->crd[1][Y] == map->height - 1) ||
+	// // 	(!tmp->crd[0][X] && !tmp->crd[1][X]) || (tmp->crd[0][X] == map->width - 1 && tmp->crd[1][X] == map->width - 1))
+	// while ((!tmp->crd[0][Y] && !tmp->crd[1][Y]) || (tmp->crd[0][X] == map->width - 1 && tmp->crd[1][X] == map->width - 1))
+	// {
+	// 	tmp = tmp->next;
+	// 	step += 1;
+	// }
 
-	if (step)
-	{
-		if (step == 1)
-		{
-			tmp = llist;
-			llist = llist->next;
-			tmp->next = llist->next;
-			llist->next = tmp;
-		}
-		else
-		{
-			tmp = llist;
-			while (i < step - 1)
-			{
-				tmp = tmp->next;
-				i += 1;
-			}
-			// printf("%f %f  ", tmp->crd[0][X],  tmp->crd[0][Y]);
-			// printf("%f %f\n", tmp->crd[1][X],  tmp->crd[1][Y]);
-			// exit(0);
+	// if (step)
+	// {
+	// 	if (step == 1)
+	// 	{
+	// 		tmp = llist;
+	// 		llist = llist->next;
+	// 		tmp->next = llist->next;
+	// 		llist->next = tmp;
+	// 	}
+	// 	else
+	// 	{
+	// 		tmp = llist;
+	// 		while (i < step - 1)
+	// 		{
+	// 			tmp = tmp->next;
+	// 			i += 1;
+	// 		}
+	// 		// printf("%f %f  ", tmp->crd[0][X],  tmp->crd[0][Y]);
+	// 		// printf("%f %f\n", tmp->crd[1][X],  tmp->crd[1][Y]);
+	// 		// exit(0);
 
-			// tmp2 = tmp->next->next;
-			// tmp->next->next = llist->next;
-			// tmp->next = llist;
-			// list = tmp;
-			// llist->next = tmp2;
+	// 		// tmp2 = tmp->next->next;
+	// 		// tmp->next->next = llist->next;
+	// 		// tmp->next = llist;
+	// 		// list = tmp;
+	// 		// llist->next = tmp2;
 
-			tmp2 = llist->next;
-			llist->next = tmp->next->next;
-			tmp->next->next = tmp2;
-			tmp2 = tmp->next;
-			tmp->next = llist;
-			llist = tmp2;
+	// 		tmp2 = llist->next;
+	// 		llist->next = tmp->next->next;
+	// 		tmp->next->next = tmp2;
+	// 		tmp2 = tmp->next;
+	// 		tmp->next = llist;
+	// 		llist = tmp2;
 			
-			// tmp->next->next = llist->next;
-			// tmp->next = llist;
-			// llist->next = NULL;
-		}
-		// printf("%f %f  ", llist->crd[0][X],  llist->crd[0][Y]);
-		// printf("%f %f\n", llist->crd[1][X],  llist->crd[1][Y]);
-		// exit(0);
+	// 		// tmp->next->next = llist->next;
+	// 		// tmp->next = llist;
+	// 		// llist->next = NULL;
+	// 	}
+	// 	// printf("%f %f  ", llist->crd[0][X],  llist->crd[0][Y]);
+	// 	// printf("%f %f\n", llist->crd[1][X],  llist->crd[1][Y]);
+	// 	// exit(0);
 		
-	}
+	// }
 	
 	// if (!llist->crd[0][Y] && !llist->crd[1][Y])
 	// {
@@ -111,7 +112,7 @@ int		main()
 
 	
 	
-	bsp_tree = set_tree(llist);
+	bsp_tree = set_tree(llist, map);
 
 	// print_tree(bsp_tree);
 	// exit(0);
@@ -234,4 +235,68 @@ void	draw_win(t_sdl *sdl, t_player *player)
 {
 	clear_player(sdl, player);
 	draw_player(sdl, player);
+}
+
+void	fix_llist(t_llist **llist, t_map *map)
+{
+	t_llist *tmp;
+	t_llist *tmp2;
+	
+	int		step = 0;
+	int		i = 0;
+	tmp = *llist;
+	// while ((!tmp->crd[0][Y] && !tmp->crd[1][Y]) || (tmp->crd[0][Y] == map->height - 1 && tmp->crd[1][Y] == map->height - 1) ||
+	// 	(!tmp->crd[0][X] && !tmp->crd[1][X]) || (tmp->crd[0][X] == map->width - 1 && tmp->crd[1][X] == map->width - 1))
+	while ((!tmp->crd[0][Y] && !tmp->crd[1][Y]) || (tmp->crd[0][X] == map->width - 1 && tmp->crd[1][X] == map->width - 1))
+	{
+		// // len == 1 bad decision
+		// if (!tmp->next)
+		// 	return ;
+		tmp = tmp->next;
+		step += 1;
+	}
+
+	if (step)
+	{
+		if (step == 1)
+		{
+			tmp = *llist;
+			*llist = (*llist)->next;
+			tmp->next = (*llist)->next;
+			(*llist)->next = tmp;
+		}
+		else
+		{
+			tmp = *llist;
+			while (i < step - 1)
+			{
+				tmp = tmp->next;
+				i += 1;
+			}
+			// printf("%f %f  ", tmp->crd[0][X],  tmp->crd[0][Y]);
+			// printf("%f %f\n", tmp->crd[1][X],  tmp->crd[1][Y]);
+			// exit(0);
+
+			// tmp2 = tmp->next->next;
+			// tmp->next->next = llist->next;
+			// tmp->next = llist;
+			// list = tmp;
+			// llist->next = tmp2;
+
+			tmp2 = (*llist)->next;
+			(*llist)->next = tmp->next->next;
+			tmp->next->next = tmp2;
+			tmp2 = tmp->next;
+			tmp->next = *llist;
+			*llist = tmp2;
+			
+			// tmp->next->next = llist->next;
+			// tmp->next = llist;
+			// llist->next = NULL;
+		}
+		// printf("%f %f  ", llist->crd[0][X],  llist->crd[0][Y]);
+		// printf("%f %f\n", llist->crd[1][X],  llist->crd[1][Y]);
+		// exit(0);
+		
+	}
 }
