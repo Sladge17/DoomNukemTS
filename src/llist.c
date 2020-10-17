@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:34:41 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/15 17:21:23 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/16 12:52:27 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_llist		*create_linsert(t_llist *llist, double *sep_vertex)
 	return (lnode);
 }
 
-t_llist	*add_overallnodes(t_map *map)
+t_llist	*fill_overallnodes(t_map *map)
 {
 	t_llist		*llist;
 	t_llist		*cursor;

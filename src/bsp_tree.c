@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 20:33:12 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/15 20:07:32 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/17 19:03:41 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	sep_llist(t_llist *llist, t_llist *slicer, t_llist **part_llist)
 			fill_partllist(&llist, part_llist, &cursor[0], BACK);
 			continue ;
 		}
-		sep_lnode(llist, slicer);
+		sep_lnode(llist, slicer->k);
 	}
 	if (part_llist[FRONT])
 		cursor[FRONT]->next = NULL;
@@ -126,12 +126,12 @@ void	fill_partllist(t_llist **llist, t_llist **part_llist, t_llist **cursor, int
 
 
 
-void	sep_lnode(t_llist *llist, t_llist *slicer)
+void	sep_lnode(t_llist *llist, int *slicer_k)
 {
 	double	*sep_vertex;
 	t_llist	*linsert;
 
-	sep_vertex = set_sepvertex(llist, slicer);
+	sep_vertex = set_sepvertex(llist, slicer_k);
 	linsert = create_linsert(llist, sep_vertex);
 	llist->crd[1][X] = sep_vertex[X];
 	llist->crd[1][Y] = sep_vertex[Y];
@@ -141,15 +141,15 @@ void	sep_lnode(t_llist *llist, t_llist *slicer)
 	llist->next = linsert;
 }
 
-double	*set_sepvertex(t_llist *llist, t_llist *slicer)
+double	*set_sepvertex(t_llist *llist, int *slicer_k)
 {
 	double	*sep_vertex;
 
 	sep_vertex = (double *)malloc(sizeof(double) * 2);
-	sep_vertex[X] = (slicer->k[LC] * llist->k[LB] - llist->k[LC] * slicer->k[LB]) /
-				(double)(llist->k[LA] * slicer->k[LB] - slicer->k[LA] * llist->k[LB]);
-	sep_vertex[Y] = (slicer->k[LA] * llist->k[LC] - llist->k[LA] * slicer->k[LC]) /
-				(double)(llist->k[LA] * slicer->k[LB] - slicer->k[LA] * llist->k[LB]);
+	sep_vertex[X] = (slicer_k[LC] * llist->k[LB] - llist->k[LC] * slicer_k[LB]) /
+				(double)(llist->k[LA] * slicer_k[LB] - slicer_k[LA] * llist->k[LB]);
+	sep_vertex[Y] = (slicer_k[LA] * llist->k[LC] - llist->k[LA] * slicer_k[LC]) /
+				(double)(llist->k[LA] * slicer_k[LB] - slicer_k[LA] * llist->k[LB]);
 	return (sep_vertex);
 }
 
@@ -249,3 +249,144 @@ int		set_slicerindex(int *score, int llen)
 	}
 	return (sl_index);
 }
+
+void	add_overallnodes(t_bsp *bsp_tree, t_llist *llist)
+{
+	while (llist)
+	{
+		if (add_overnode(bsp_tree, llist))
+			llist = llist->next;
+		// if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] <= -bsp_tree->k[LC] &&
+		// 	bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] <= -bsp_tree->k[LC])
+		// {
+		// 	// go to front
+		// 	if (!bsp_tree->front)
+		// 	{
+		// 		bsp_tree->front = create_bspnode(llist);
+		// 		return ;
+		// 	}
+		// 	else
+		// 	{
+		// 		add_overallnodes(bsp_tree->front, llist);
+		// 	}
+		// 	llist = llist->next;
+		// 	continue ;
+		// }
+		// if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] >= -bsp_tree->k[LC] &&
+		// 	bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] >= -bsp_tree->k[LC])
+		// {
+		// 	// go to back
+		// 	if (!bsp_tree->back)
+		// 	{
+		// 		bsp_tree->back = create_bspnode(llist);
+		// 		return ;
+		// 	}
+		// 	else
+		// 	{
+		// 		add_overallnodes(bsp_tree->back, llist);
+		// 	}
+		// 	llist = llist->next;
+		// 	continue ;
+
+		// }
+		// sep_lnode(llist, bsp_tree->k);
+	}
+	
+}
+
+char	add_overnode(t_bsp *bsp_tree, t_llist *llist)
+{
+	if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] >= -bsp_tree->k[LC] &&
+		bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] >= -bsp_tree->k[LC])
+	{
+		// go to back
+
+		if (
+			llist->crd[0][X] == bsp_tree->back->crd[0][X] &&
+			llist->crd[0][Y] == bsp_tree->back->crd[0][Y] &&
+			llist->crd[1][X] == bsp_tree->back->crd[1][X] &&
+			llist->crd[1][Y] == bsp_tree->back->crd[1][Y])
+		{
+			free(bsp_tree->back);
+			bsp_tree->back = bsp_tree->back->back;
+			return (1);
+		}
+		
+		if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] == -bsp_tree->k[LC] &&
+			bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] == -bsp_tree->k[LC])
+		{
+			if (!(add_overnode(bsp_tree->back, llist)))
+				return (0);
+			else
+			{
+				return (1);
+			}
+			
+		}
+		
+		if (!bsp_tree->back)
+		{
+			bsp_tree->back = create_bspnode(llist);
+		}
+		else
+		{
+			if(!(add_overnode(bsp_tree->back, llist)))
+				return (0);
+		}
+		return (1);
+
+	}
+	
+	if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] <= -bsp_tree->k[LC] &&
+		bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] <= -bsp_tree->k[LC])
+	{
+		// go to front
+		if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] == -bsp_tree->k[LC] &&
+			bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] == -bsp_tree->k[LC])
+		{
+			if (!(add_overnode(bsp_tree->back, llist)))
+				return (0);
+		}
+		// if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] == -bsp_tree->k[LC] &&
+		// 	bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] == -bsp_tree->k[LC])
+		// {
+		// // 	if (llist->crd[0][X] == bsp_tree->crd[0][X] &&
+		// // 		llist->crd[0][Y] == bsp_tree->crd[0][Y] &&
+		// // 		llist->crd[1][X] == bsp_tree->crd[1][X] &&
+		// // 		llist->crd[1][Y] == bsp_tree->crd[1][Y])
+		// // 	{
+		// // 		printf("%f %f\n", llist->crd[0][X], llist->crd[0][Y]);
+		// // 		printf("%f %f\n", llist->crd[1][X], llist->crd[1][Y]);
+		// // 		// bsp_tree = NULL;
+		// // 		// free(bsp_tree);
+		// // 		printf("ok\n");
+		// // 		return (1);
+		// // 	}
+		// // 	// if (bsp_tree->back)
+		// // 	// {
+		// // 	// 	printf("ok\n");
+		// // 	// 	// exit(0);
+		// // 	// }
+		// 	bsp_tree = bsp_tree->back;
+			
+		// 	return (0);
+			
+		// }
+
+		
+		if (!bsp_tree->front)
+		{
+			bsp_tree->front = create_bspnode(llist);
+		}
+		else
+		{
+			if (!(add_overnode(bsp_tree->front, llist)))
+				return (0);
+		}
+		return (1);
+	}
+	
+	sep_lnode(llist, bsp_tree->k);
+	return (0);
+}
+

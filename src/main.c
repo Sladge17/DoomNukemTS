@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/15 20:09:43 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/17 18:05:19 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,103 @@ int		main()
 	vlist = set_vlist(map);
 	llist = set_llist(vlist);
 	
-	bsp_tree = set_tree(llist);
-
-	t_llist *crs = llist;
-	while (crs)
+	t_llist *tmp;
+	t_llist *tmp2;
+	
+	int		step = 0;
+	int		i = 0;
+	tmp = llist;
+	// while ((!tmp->crd[0][Y] && !tmp->crd[1][Y]) || (tmp->crd[0][Y] == map->height - 1 && tmp->crd[1][Y] == map->height - 1) ||
+	// 	(!tmp->crd[0][X] && !tmp->crd[1][X]) || (tmp->crd[0][X] == map->width - 1 && tmp->crd[1][X] == map->width - 1))
+	while ((!tmp->crd[0][Y] && !tmp->crd[1][Y]) || (tmp->crd[0][X] == map->width - 1 && tmp->crd[1][X] == map->width - 1))
 	{
-		printf("%f %f\n", crs->crd[0][X],  crs->crd[0][Y]);
-		printf("%f %f\n", crs->crd[1][X],  crs->crd[1][Y]);
-		crs = crs->next;
+		tmp = tmp->next;
+		step += 1;
 	}
-	exit(0);
+
+	if (step)
+	{
+		if (step == 1)
+		{
+			tmp = llist;
+			llist = llist->next;
+			tmp->next = llist->next;
+			llist->next = tmp;
+		}
+		else
+		{
+			tmp = llist;
+			while (i < step - 1)
+			{
+				tmp = tmp->next;
+				i += 1;
+			}
+			// printf("%f %f  ", tmp->crd[0][X],  tmp->crd[0][Y]);
+			// printf("%f %f\n", tmp->crd[1][X],  tmp->crd[1][Y]);
+			// exit(0);
+
+			// tmp2 = tmp->next->next;
+			// tmp->next->next = llist->next;
+			// tmp->next = llist;
+			// list = tmp;
+			// llist->next = tmp2;
+
+			tmp2 = llist->next;
+			llist->next = tmp->next->next;
+			tmp->next->next = tmp2;
+			tmp2 = tmp->next;
+			tmp->next = llist;
+			llist = tmp2;
+			
+			// tmp->next->next = llist->next;
+			// tmp->next = llist;
+			// llist->next = NULL;
+		}
+		// printf("%f %f  ", llist->crd[0][X],  llist->crd[0][Y]);
+		// printf("%f %f\n", llist->crd[1][X],  llist->crd[1][Y]);
+		// exit(0);
+		
+	}
+	
+	// if (!llist->crd[0][Y] && !llist->crd[1][Y])
+	// {
+	// 	tmp = llist;
+	// 	llist = llist->next;
+	// 	tmp->next = llist->next;
+	// 	llist->next = tmp;
+	// }
+
+	// t_llist *crs = llist;
+	// while (crs)
+	// {
+	// 	printf("%f %f  ", crs->crd[0][X],  crs->crd[0][Y]);
+	// 	printf("%f %f\n", crs->crd[1][X],  crs->crd[1][Y]);
+	// 	crs = crs->next;
+	// }
+	// exit(0);
 
 	// if (!llist)
 	// {
 	// 	printf("ok\n");
 	// 	exit(0);
 	// }
-	llist = add_overallnodes(map);
+
+	
+	
+	bsp_tree = set_tree(llist);
+
+	// print_tree(bsp_tree);
+	// exit(0);
+	
+
+
+	
+
+	llist = fill_overallnodes(map);
 	// NEED ADD OVERALL LINES INTO EXISTING BSP_TREE
+	
+
+	add_overallnodes(bsp_tree, llist);
 	
 
 	draw_map(sdl, bsp_tree, map, player);

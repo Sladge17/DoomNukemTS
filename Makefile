@@ -12,7 +12,8 @@ SRC_LIST =	main.c\
 			llist.c\
 			bsp_tree.c\
 			draw_map.c\
-			draw_line.c
+			draw_line.c\
+			utils.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_LIST))
 
 OBJ_DIR = obj/

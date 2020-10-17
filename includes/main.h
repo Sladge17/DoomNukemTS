@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/15 20:06:58 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/17 18:22:16 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	del_vlist(t_vlist **head);
 t_llist		*set_llist(t_vlist *vlist);
 t_llist		*create_lnode(t_vlist *vertex_0, t_vlist *vertex_1);
 t_llist		*create_linsert(t_llist *llist, double *sep_vertex);
-t_llist		*add_overallnodes(t_map *map);
+t_llist		*fill_overallnodes(t_map *map);
 
 /*
 ** bsp_tree.c
@@ -65,15 +65,21 @@ void	sep_llist(t_llist *llist, t_llist *slicer, t_llist **part_llist);
 
 void	fill_partllist(t_llist **llist, t_llist **part_llist, t_llist **cursor, int part);
 
-void	sep_lnode(t_llist *llist, t_llist *slicer);
+void	sep_lnode(t_llist *llist, int *slicer_k);
 // void	add_bspnode(t_bsp *bsp_tree, t_llist *lcursor, double *vertex_0, double *vertex_1);
 // double	*sep_lnode(t_bsp *bsp_tree, t_llist *lcursor);
-double	*set_sepvertex(t_llist *llist, t_llist *slicer);
+double	*set_sepvertex(t_llist *llist, int *slicer_k);
 
 t_llist	*set_slicer(t_llist **llist, int llen);
 int		*set_score(t_llist *llist, int llen);
 int		set_slicerindex(int *score, int llen);
+void	add_overallnodes(t_bsp *bsp_tree, t_llist *llist);
+char	add_overnode(t_bsp *bsp_tree, t_llist *llist);
 
+/*
+** print_tree.c
+*/
+void	print_tree(t_bsp *bsp_tree);
 
 /*
 ** draw_map.c
@@ -92,5 +98,10 @@ void	clear_player(t_sdl *sdl, t_player *player);
 void	draw_line(t_sdl *sdl, int *vert_0, int *vert_1);
 void	draw_xmore(t_sdl *sdl, int *vert_0, int *vert_1, char *d, int *len);
 void	draw_ymore(t_sdl *sdl, int *vert_0, int *vert_1, char *d, int *len);
+
+/*
+** utils.c
+*/
+void	print_tree(t_bsp *bsp_tree);
 
 #endif
