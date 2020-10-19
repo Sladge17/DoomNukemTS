@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:34:41 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/19 13:35:07 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/19 18:24:33 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ int		set_startid(t_llist *llist, t_map *map)
 	while ((!llist->crd[0][Y] && !llist->crd[1][Y]) ||
 		(llist->crd[0][X] == map->width - 1 && llist->crd[1][X] == map->width - 1))
 	{
+		if (!llist->next)
+			return (0);
 		llist = llist->next;
 		start_id += 1;
 	}
