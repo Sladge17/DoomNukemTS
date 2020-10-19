@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/19 13:38:55 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/19 19:13:38 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int		set_llen(t_llist *llist);
 t_bsp	*create_bspnode(t_llist *slicer);
 void	add_overallnodes(t_bsp *bsp_tree, t_llist *llist);
 char	add_overnode(t_bsp *bsp_tree, t_llist *llist);
+char	del_bspnode(t_bsp *bsp_tree, t_llist *llist);
 
 /*
 ** llist_slicer.c

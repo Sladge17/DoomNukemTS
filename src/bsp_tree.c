@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 20:33:12 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/19 13:40:24 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/19 19:16:42 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,17 +138,17 @@ char	add_overnode(t_bsp *bsp_tree, t_llist *llist)
 		bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] >= -bsp_tree->k[LC])
 	{
 		// go to back
-
-		if (
-			llist->crd[0][X] == bsp_tree->back->crd[0][X] &&
-			llist->crd[0][Y] == bsp_tree->back->crd[0][Y] &&
-			llist->crd[1][X] == bsp_tree->back->crd[1][X] &&
-			llist->crd[1][Y] == bsp_tree->back->crd[1][Y])
-		{
-			free(bsp_tree->back);
-			bsp_tree->back = bsp_tree->back->back;
+		if (del_bspnode(bsp_tree, llist))
 			return (1);
-		}
+		// if (llist->crd[0][X] == bsp_tree->back->crd[0][X] &&
+		// 	llist->crd[0][Y] == bsp_tree->back->crd[0][Y] &&
+		// 	llist->crd[1][X] == bsp_tree->back->crd[1][X] &&
+		// 	llist->crd[1][Y] == bsp_tree->back->crd[1][Y])
+		// {
+		// 	free(bsp_tree->back);
+		// 	bsp_tree->back = bsp_tree->back->back;
+		// 	return (1);
+		// }
 		
 		if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] == -bsp_tree->k[LC] &&
 			bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] == -bsp_tree->k[LC])
@@ -185,6 +185,7 @@ char	add_overnode(t_bsp *bsp_tree, t_llist *llist)
 			if (!(add_overnode(bsp_tree->back, llist)))
 				return (0);
 		}
+		
 		// if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] == -bsp_tree->k[LC] &&
 		// 	bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] == -bsp_tree->k[LC])
 		// {
@@ -228,3 +229,16 @@ char	add_overnode(t_bsp *bsp_tree, t_llist *llist)
 	return (0);
 }
 
+char	del_bspnode(t_bsp *bsp_tree, t_llist *llist)
+{
+	if (llist->crd[0][X] == bsp_tree->back->crd[0][X] &&
+		llist->crd[0][Y] == bsp_tree->back->crd[0][Y] &&
+		llist->crd[1][X] == bsp_tree->back->crd[1][X] &&
+		llist->crd[1][Y] == bsp_tree->back->crd[1][Y])
+	{
+		free(bsp_tree->back);
+		bsp_tree->back = bsp_tree->back->back;
+		return (1);
+	}
+	return (0);
+}
