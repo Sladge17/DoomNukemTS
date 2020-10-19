@@ -11,6 +11,8 @@ SRC_LIST =	main.c\
 			vlist.c\
 			llist.c\
 			bsp_tree.c\
+			llist_slicer.c\
+			llist_part.c\
 			draw_map.c\
 			draw_line.c\
 			utils.c

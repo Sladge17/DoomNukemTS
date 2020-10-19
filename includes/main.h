@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/17 19:45:12 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/19 13:38:55 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	check_event(SDL_Event event, t_player *player, t_sdl *sdl);
 char	check_collision(t_sdl *sdl, t_player *player, char step_x, char step_y);
 void	draw_win(t_sdl *sdl, t_player *player);
 void	draw_normal(t_sdl *sdl, t_bsp *root, t_map *map);
-void	fix_llist(t_llist **llist, t_map *map);
+
 /*
 ** init.c
 */
@@ -52,7 +52,8 @@ void	del_vlist(t_vlist **head);
 */
 t_llist		*set_llist(t_vlist *vlist);
 t_llist		*create_lnode(t_vlist *vertex_0, t_vlist *vertex_1);
-t_llist		*create_linsert(t_llist *llist, double *sep_vertex);
+void		fix_llist(t_llist **llist, t_map *map);
+int			set_startid(t_llist *llist, t_map *map);
 t_llist		*fill_overallnodes(t_map *map);
 
 /*
@@ -61,20 +62,25 @@ t_llist		*fill_overallnodes(t_map *map);
 t_bsp	*set_tree(t_llist *llist, t_map *map);
 int		set_llen(t_llist *llist);
 t_bsp	*create_bspnode(t_llist *slicer);
-void	sep_llist(t_llist *llist, t_llist *slicer, t_llist **part_llist);
+void	add_overallnodes(t_bsp *bsp_tree, t_llist *llist);
+char	add_overnode(t_bsp *bsp_tree, t_llist *llist);
 
-void	fill_partllist(t_llist **llist, t_llist **part_llist, t_llist **cursor, int part);
-
-void	sep_lnode(t_llist *llist, int *slicer_k);
-// void	add_bspnode(t_bsp *bsp_tree, t_llist *lcursor, double *vertex_0, double *vertex_1);
-// double	*sep_lnode(t_bsp *bsp_tree, t_llist *lcursor);
-double	*set_sepvertex(t_llist *llist, int *slicer_k);
-
+/*
+** llist_slicer.c
+*/
 t_llist	*set_slicer(t_llist **llist, int llen);
 int		*set_score(t_llist *llist, int llen);
 int		set_slicerindex(int *score, int llen);
-void	add_overallnodes(t_bsp *bsp_tree, t_llist *llist);
-char	add_overnode(t_bsp *bsp_tree, t_llist *llist);
+
+/*
+** llist_part.c
+*/
+void	sep_llist(t_llist *llist, t_llist *slicer, t_llist **part_llist);
+void	fill_partllist(t_llist **llist, t_llist **part_llist, t_llist **cursor, int part);
+void	sep_lnode(t_llist *llist, int *slicer_k);
+double	*set_sepvertex(t_llist *llist, int *slicer_k);
+t_llist	*create_linsert(t_llist *llist, double *sep_vertex);
+
 
 /*
 ** print_tree.c
