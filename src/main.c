@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/19 13:44:51 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/20 14:38:56 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,13 @@ int		main()
 	llist = set_llist(vlist);
 	fix_llist(&llist, map);
 	// NEED FREE VLIST
+	free_vlist(vlist);
 	
 	bsp_tree = set_tree(llist, map);
-
-	// print_tree(bsp_tree);
-	// exit(0);
-	
 	llist = fill_overallnodes(map);
 	add_overallnodes(bsp_tree, llist);
 	// NEED FREE LLIST
+	free_llist(llist);
 	
 	draw_map(sdl, bsp_tree, map, player);
 

@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 20:33:12 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/19 19:16:42 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/20 13:41:19 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,137 +94,40 @@ void	add_overallnodes(t_bsp *bsp_tree, t_llist *llist)
 	{
 		if (add_overnode(bsp_tree, llist))
 			llist = llist->next;
-		// if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] <= -bsp_tree->k[LC] &&
-		// 	bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] <= -bsp_tree->k[LC])
-		// {
-		// 	// go to front
-		// 	if (!bsp_tree->front)
-		// 	{
-		// 		bsp_tree->front = create_bspnode(llist);
-		// 		return ;
-		// 	}
-		// 	else
-		// 	{
-		// 		add_overallnodes(bsp_tree->front, llist);
-		// 	}
-		// 	llist = llist->next;
-		// 	continue ;
-		// }
-		// if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] >= -bsp_tree->k[LC] &&
-		// 	bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] >= -bsp_tree->k[LC])
-		// {
-		// 	// go to back
-		// 	if (!bsp_tree->back)
-		// 	{
-		// 		bsp_tree->back = create_bspnode(llist);
-		// 		return ;
-		// 	}
-		// 	else
-		// 	{
-		// 		add_overallnodes(bsp_tree->back, llist);
-		// 	}
-		// 	llist = llist->next;
-		// 	continue ;
-
-		// }
-		// sep_lnode(llist, bsp_tree->k);
 	}
 	
 }
 
 char	add_overnode(t_bsp *bsp_tree, t_llist *llist)
 {
+	if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] == -bsp_tree->k[LC] &&
+		bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] == -bsp_tree->k[LC])
+		return (add_overnode(bsp_tree->back, llist));
+	
 	if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] >= -bsp_tree->k[LC] &&
 		bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] >= -bsp_tree->k[LC])
 	{
 		// go to back
 		if (del_bspnode(bsp_tree, llist))
 			return (1);
-		// if (llist->crd[0][X] == bsp_tree->back->crd[0][X] &&
-		// 	llist->crd[0][Y] == bsp_tree->back->crd[0][Y] &&
-		// 	llist->crd[1][X] == bsp_tree->back->crd[1][X] &&
-		// 	llist->crd[1][Y] == bsp_tree->back->crd[1][Y])
-		// {
-		// 	free(bsp_tree->back);
-		// 	bsp_tree->back = bsp_tree->back->back;
-		// 	return (1);
-		// }
-		
-		if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] == -bsp_tree->k[LC] &&
-			bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] == -bsp_tree->k[LC])
-		{
-			if (!(add_overnode(bsp_tree->back, llist)))
-				return (0);
-			else
-			{
-				return (1);
-			}
-			
-		}
-		
 		if (!bsp_tree->back)
 		{
 			bsp_tree->back = create_bspnode(llist);
+			return (1);
 		}
-		else
-		{
-			if(!(add_overnode(bsp_tree->back, llist)))
-				return (0);
-		}
-		return (1);
-
+		return (add_overnode(bsp_tree->back, llist));
 	}
-	
 	if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] <= -bsp_tree->k[LC] &&
 		bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] <= -bsp_tree->k[LC])
 	{
 		// go to front
-		if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] == -bsp_tree->k[LC] &&
-			bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] == -bsp_tree->k[LC])
-		{
-			if (!(add_overnode(bsp_tree->back, llist)))
-				return (0);
-		}
-		
-		// if (bsp_tree->k[LA] * llist->crd[0][X] + bsp_tree->k[LB] * llist->crd[0][Y] == -bsp_tree->k[LC] &&
-		// 	bsp_tree->k[LA] * llist->crd[1][X] + bsp_tree->k[LB] * llist->crd[1][Y] == -bsp_tree->k[LC])
-		// {
-		// // 	if (llist->crd[0][X] == bsp_tree->crd[0][X] &&
-		// // 		llist->crd[0][Y] == bsp_tree->crd[0][Y] &&
-		// // 		llist->crd[1][X] == bsp_tree->crd[1][X] &&
-		// // 		llist->crd[1][Y] == bsp_tree->crd[1][Y])
-		// // 	{
-		// // 		printf("%f %f\n", llist->crd[0][X], llist->crd[0][Y]);
-		// // 		printf("%f %f\n", llist->crd[1][X], llist->crd[1][Y]);
-		// // 		// bsp_tree = NULL;
-		// // 		// free(bsp_tree);
-		// // 		printf("ok\n");
-		// // 		return (1);
-		// // 	}
-		// // 	// if (bsp_tree->back)
-		// // 	// {
-		// // 	// 	printf("ok\n");
-		// // 	// 	// exit(0);
-		// // 	// }
-		// 	bsp_tree = bsp_tree->back;
-			
-		// 	return (0);
-			
-		// }
-
-		
 		if (!bsp_tree->front)
 		{
 			bsp_tree->front = create_bspnode(llist);
+			return (1);
 		}
-		else
-		{
-			if (!(add_overnode(bsp_tree->front, llist)))
-				return (0);
-		}
-		return (1);
+		return (add_overnode(bsp_tree->front, llist));
 	}
-	
 	sep_lnode(llist, bsp_tree->k);
 	return (0);
 }

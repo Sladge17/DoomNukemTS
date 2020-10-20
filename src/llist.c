@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:34:41 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/19 18:24:33 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/20 14:37:55 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,4 +181,14 @@ t_llist	*fill_overallnodes(t_map *map)
 	cursor->k[LC] *= -1;
 
 	return (llist);
+}
+
+void	free_llist(t_llist *llist)
+{
+	while (llist->next)
+	{
+		free(llist);
+		llist = llist->next;
+	}
+	free(llist);
 }

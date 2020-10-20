@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/19 19:13:38 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/20 14:46:49 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_vlist	*set_vtail(t_map *map);
 t_vlist	*create_vnode(int index, t_map *map);
 t_vlist	*create_vempty();
 void	add_vnode(t_vlist **head, int index, t_map *map);
-void	del_vlist(t_vlist **head);
+void	free_vlist(t_vlist *head);
 
 /*
 ** llist.c
@@ -55,6 +55,7 @@ t_llist		*create_lnode(t_vlist *vertex_0, t_vlist *vertex_1);
 void		fix_llist(t_llist **llist, t_map *map);
 int			set_startid(t_llist *llist, t_map *map);
 t_llist		*fill_overallnodes(t_map *map);
+void		free_llist(t_llist *llist);
 
 /*
 ** bsp_tree.c
@@ -81,7 +82,6 @@ void	fill_partllist(t_llist **llist, t_llist **part_llist, t_llist **cursor, int
 void	sep_lnode(t_llist *llist, int *slicer_k);
 double	*set_sepvertex(t_llist *llist, int *slicer_k);
 t_llist	*create_linsert(t_llist *llist, double *sep_vertex);
-
 
 /*
 ** print_tree.c
