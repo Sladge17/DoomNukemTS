@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:30:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/10/20 14:38:56 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/10/21 15:37:30 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,22 +93,29 @@ char	check_event(SDL_Event event, t_player *player, t_sdl *sdl)
 				player->crd[X] += 1;
 				return (1);
 			}
-			// if (event.key.keysym.sym == SDLK_q)
-			// {
-			// 	if (check_collision(sdl, player, 1, 0))
-			// 		return (0);
-			// 	player->direction += 10 * (M_PI / 180);
-			// 	return (1);
-			// }
-			// if (event.key.keysym.sym == SDLK_e)
-			// {
-			// 	if (check_collision(sdl, player, 1, 0))
-			// 		return (0);
-			// 	player->direction -= 10 * (M_PI / 180);
-			// 	// if (player->direction < 0)
-			// 	// 	player->direction = 2 * M_PI - player->direction;
-			// 	return (1);
-			// }
+			if (event.key.keysym.sym == SDLK_q)
+			{
+				if (check_collision(sdl, player, 1, 0))
+					return (0);
+				player->direction += 10 * M_PI / 180;
+				if (player->direction > 2 * M_PI)
+				{
+					player->direction = player->direction - 2 * M_PI;
+					return (1);
+				}
+				if ((int)(player->direction * 100) == 628)
+					player->direction = 0;
+				return (1);
+			}
+			if (event.key.keysym.sym == SDLK_e)
+			{
+				if (check_collision(sdl, player, 1, 0))
+					return (0);
+				player->direction -= 10 * M_PI / 180;
+				if (player->direction < 0)
+					player->direction = 2 * M_PI + player->direction;
+				return (1);
+			}
 		}
 		// return (0);
 	}
